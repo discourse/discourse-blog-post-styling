@@ -1,38 +1,25 @@
-/// str-split function found at: https://github.com/sass-projects/stringy/blob/master/src/scss/_str-split.scss
-/// License: MIT
+@use "sass:list";
+@use "sass:meta";
+@use "sass:string";
 
-/// String split
-///
-/// Splits a String into a list of substrings using `$separator`.
-/// If separator is omitted, the list returned contains one element consisting of the entire string.
-/// If separator is an empty string, str is converted to a list of all characters.
-/// Integer specifying a limit on the number of splits to be found.
-/// The split method still splits on every match of separator, but it truncates the returned list to at most limit elements.
-///
-/// @param {string}  $string
-/// @param {string}  $separator
-/// @param {$number} $limit
-///
-/// @return {list}
-///
-/// @author pascalduez https://gist.github.com/pascalduez/065e560c6314c7e9d7f8
+// str-split function - based on https://github.com/sass-projects/stringy (MIT License)
+// Splits a string into a list of substrings using $separator.
+// @author pascalduez https://gist.github.com/pascalduez/065e560c6314c7e9d7f8
 
 @function str-split($string, $separator: null, $limit: null) {
-  $string: unquote($string);
-
-  @if type-of($string) != "string" {
-    @error "`str-split` function expecting a string for $string; #{type-of($string)} given.";
+  @if meta.type-of($string) != "string" {
+    @error "`str-split` function expecting a string for $string; #{meta.type-of($string)} given.";
   }
 
-  $result: zip(());
+  $result: list.zip(());
 
   @if not $separator {
     @return ($string);
   }
 
   @if $separator == "" {
-    @for $i from 1 through str-length($string) {
-      $result: append($result, str-slice($string, $i, $i));
+    @for $i from 1 through string.length($string) {
+      $result: list.append($result, string.slice($string, $i, $i));
     }
 
     @return $result;
@@ -40,25 +27,27 @@
 
   $running: true;
   $progress: $string;
-  $length: str-length($separator);
+  $length: string.length($separator);
 
   @while $running {
-    $index: str-index($progress, $separator);
+    $index: string.index($progress, $separator);
+
     @if $index {
-      $result: append($result, str-slice($progress, 1, ($index - 1)));
-      $progress: str-slice($progress, ($index + $length));
+      $result: list.append($result, string.slice($progress, 1, ($index - 1)));
+      $progress: string.slice($progress, ($index + $length));
     } @else {
       $running: false;
     }
   }
 
-  $result: append($result, $progress);
+  $result: list.append($result, $progress);
 
   @if $limit and $limit > 0 {
-    $limit: if($limit > length($result), length($result), $limit);
+    $limit: if($limit > list.length($result), list.length($result), $limit);
     $return: ();
+
     @for $i from 1 through $limit {
-      $return: append($return, nth($result, $i));
+      $return: list.append($return, list.nth($result, $i));
     }
 
     @return $return;
@@ -69,6 +58,7 @@
 
 $values: $blog_category;
 $split-values: str-split($values, ",");
+
 @each $value in $split-values {
   .category-#{$value} {
     @extend %blog-category;
@@ -77,6 +67,7 @@ $split-values: str-split($values, ",");
 
 $values: $blog_tag;
 $split-values: str-split($values, "|");
+
 @each $value in $split-values {
   .tag-#{$value} {
     @extend %blog-tag;
@@ -95,12 +86,14 @@ $split-values: str-split($values, "|");
 
   .blog-image-container {
     text-align: center;
+
     .blog-image {
       background-position: center center;
       background-repeat: no-repeat;
       background-size: contain;
       height: 440px;
       margin-bottom: 1em;
+
       @if $image_display_style == "responsive crop" {
         background-size: cover;
         width: 100%;
@@ -116,6 +109,7 @@ $split-values: str-split($values, "|");
     height: 20px;
     width: 20px;
     background: none;
+
     img.avatar {
       height: 20px;
       width: 20px;
@@ -128,6 +122,7 @@ $split-values: str-split($values, "|");
       top: unset;
       bottom: -5px;
       right: -3px;
+
       .d-icon {
         height: 0.45em;
         width: 0.45em;
@@ -157,24 +152,29 @@ $split-values: str-split($values, "|");
 
         .post-infos {
           justify-content: space-between;
+
           .post-info.edits {
             order: 1;
           }
         }
       }
+
       .contents {
         border-top: 1px solid var(--primary-low);
         margin-left: -25px;
         padding: 15px;
       }
     }
+
     .topic-map.--op {
       padding-left: 0;
+
       .comments-heading {
         display: block;
         width: 100%;
         margin-top: 1em;
       }
+
       .topic-map__users-list {
         display: none;
       }
@@ -186,11 +186,12 @@ $split-values: str-split($values, "|");
         line-height: 2rem;
         letter-spacing: 1px;
         display: inline-block;
-        font-family: Georgia;
+        font-family: Georgia, serif;
       }
 
       & > p:first-child + div.lightbox-wrapper {
         display: none;
+
         & + p {
           margin-top: -15px;
         }
@@ -226,11 +227,14 @@ $split-values: str-split($values, "|");
 
   .small-action {
     font-size: 0.75em;
+
     .small-action-desc {
       max-width: 500px;
+
       .small-action-contents {
         display: flex;
         align-items: center;
+
         .avatar {
           height: 15px;
           width: 15px;
@@ -239,10 +243,10 @@ $split-values: str-split($values, "|");
     }
   }
 
-  // CSS below taken from Simon's original Blog Post plugin
   #topic-title h1 {
     font-size: 3em;
   }
+
   #topic-title a.edit-topic .d-icon {
     font-size: 0.5em;
   }
@@ -259,6 +263,7 @@ $split-values: str-split($values, "|");
     .topic-body {
       max-width: 500px;
     }
+
     &:first-child {
       font-size: 1.25em;
       line-height: 1.4;
@@ -301,13 +306,15 @@ $split-values: str-split($values, "|");
         border-left: 10px solid var(--primary-low-mid);
         padding: 0.5em 10px;
       }
-      blockquote:before {
+
+      blockquote::before {
         color: var(--primary-low-mid);
         content: open-quote;
         font-size: 4em;
         line-height: 0.1em;
         vertical-align: -0.4em;
       }
+
       blockquote p {
         display: inline;
       }
@@ -324,40 +331,49 @@ $split-values: str-split($values, "|");
   .container.posts {
     justify-content: center;
     grid-template-columns: 65% 5%;
+
     &.row {
       width: 750px;
     }
+
     .topic-navigation {
       .d-toc-main {
         min-width: 11.25em;
       }
     }
   }
+
   #topic-title {
     display: flex;
     justify-content: center;
+
     .title-wrapper {
       width: 70%;
+
       .topic-category {
         margin-top: 0.25em;
       }
     }
   }
+
   .topic-area > .loading-container {
     max-width: 500px;
   }
 
-  @media screen and (max-width: 1350px) {
+  @media screen and (width <= 1350px) {
     .container.posts {
       justify-content: center;
       grid-template-columns: 65% 15%;
+
       & > .row {
         width: unset;
       }
+
       .topic-navigation {
         margin-left: 1em;
       }
     }
+
     #topic-title {
       .title-wrapper {
         width: 80%;
@@ -365,10 +381,11 @@ $split-values: str-split($values, "|");
     }
   }
 
-  @media screen and (max-width: 924px) {
+  @media screen and (width <= 924px) {
     .container.posts {
       grid-template-columns: 100%;
     }
+
     #topic-title {
       justify-content: left;
     }

@@ -2,6 +2,14 @@ import Component from "@glimmer/component";
 import Category from "discourse/models/category";
 
 export default class BlogImage extends Component {
+  static shouldRender() {
+    // Don't render if no_images is enabled or no categories/tags are configured
+    if (settings.no_images) {
+      return false;
+    }
+    return settings.blog_category?.length > 0 || settings.blog_tag?.length > 0;
+  }
+
   get topic() {
     return this.args.outletArgs.model;
   }
@@ -10,19 +18,17 @@ export default class BlogImage extends Component {
     let hasCategory = false;
     let hasTag = false;
 
-    if (settings.no_images) {
-      return false;
-    }
-
     if (this.topic?.category_id) {
       const allowedCategories = settings.blog_category.split(",");
       const currentCategory = Category.findById(this.topic.category_id);
-      const parentCategorySlug = currentCategory.parentCategory
-        ? `${currentCategory.parentCategory.slug}-`
-        : "";
-      hasCategory = allowedCategories.some(
-        (c) => c.trim() === `${parentCategorySlug}${currentCategory.slug}`
-      );
+      if (currentCategory) {
+        const parentCategorySlug = currentCategory.parentCategory
+          ? `${currentCategory.parentCategory.slug}-`
+          : "";
+        hasCategory = allowedCategories.some(
+          (c) => c.trim() === `${parentCategorySlug}${currentCategory.slug}`
+        );
+      }
     }
 
     if (this.topic?.tags) {

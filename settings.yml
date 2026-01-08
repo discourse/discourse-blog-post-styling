@@ -29,7 +29,7 @@ mobile_enabled:
   type: bool
   default: false
   description:
-    en: 'BETA VERSION - please provide feedback in the theme component topic.'
+    en: 'Enable blog post styling on mobile devices.'
 no_images:
   type: bool
   default: false

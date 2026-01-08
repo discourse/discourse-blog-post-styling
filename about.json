@@ -1,7 +1,7 @@
 {
   "name": "Blog Post Styling",
   "about_url": "https://meta.discourse.org/t/blog-post-styling/110841",
-  "license_url": "https://github.com/tshenry/discourse-blog-post-styling/blob/main/LICENSE",
+  "license_url": "https://github.com/discourse/discourse-blog-post-styling/blob/main/LICENSE",
   "component": true,
-  "minimum_discourse_version": "2.5.0.beta4"
+  "minimum_discourse_version": "3.3.0"
 }
