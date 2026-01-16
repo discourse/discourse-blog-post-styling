@@ -27,7 +27,11 @@ export default class BlogImage extends Component {
 
     if (this.topic?.tags) {
       const allowedTags = settings.blog_tag.split("|");
-      hasTag = allowedTags.some((tag) => this.topic.tags.includes(tag));
+      hasTag = this.topic.tags.some((topicTag) => {
+        // Handle both string (old format) and object (new format) tags
+        const tagName = typeof topicTag === "string" ? topicTag : topicTag.name;
+        return allowedTags.includes(tagName);
+      });
     }
 
     return hasCategory || hasTag;
