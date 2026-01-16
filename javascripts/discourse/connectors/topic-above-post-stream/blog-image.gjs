@@ -33,7 +33,12 @@ export default class BlogImage extends Component {
 
     if (this.topic?.tags) {
       const allowedTags = settings.blog_tag.split("|");
-      hasTag = allowedTags.some((tag) => this.topic.tags.includes(tag));
+      // TODO(https://github.com/discourse/discourse/pull/36678): The string check can be
+      // removed using .discourse-compatibility once the PR is merged.
+      hasTag = this.topic.tags.some((t) => {
+        const tagName = typeof t === "string" ? t : t.name;
+        return allowedTags.includes(tagName);
+      });
     }
 
     return hasCategory || hasTag;
