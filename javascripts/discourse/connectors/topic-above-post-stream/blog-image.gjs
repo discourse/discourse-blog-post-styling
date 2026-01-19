@@ -1,4 +1,5 @@
 import Component from "@glimmer/component";
+import { htmlSafe } from "@ember/template";
 import Category from "discourse/models/category";
 
 export default class BlogImage extends Component {
@@ -33,7 +34,12 @@ export default class BlogImage extends Component {
 
     if (this.topic?.tags) {
       const allowedTags = settings.blog_tag.split("|");
-      hasTag = allowedTags.some((tag) => this.topic.tags.includes(tag));
+      // TODO(https://github.com/discourse/discourse/pull/36678): The string check can be
+      // removed using .discourse-compatibility once the PR is merged.
+      hasTag = this.topic.tags.some((t) => {
+        const tagName = typeof t === "string" ? t : t.name;
+        return allowedTags.includes(tagName);
+      });
     }
 
     return hasCategory || hasTag;
@@ -43,14 +49,15 @@ export default class BlogImage extends Component {
     return this.topic?.thumbnails?.[0]?.url;
   }
 
+  get backgroundImageStyle() {
+    return htmlSafe(`background-image: url('${this.imageURL}')`);
+  }
+
   <template>
     {{#if this.isBlogTopic}}
       {{#if this.imageURL}}
         <div class="blog-image-container">
-          <div
-            class="blog-image"
-            style="background-image: url('{{this.imageURL}}')"
-          ></div>
+          <div class="blog-image" style={{this.backgroundImageStyle}}></div>
         </div>
       {{/if}}
     {{/if}}
