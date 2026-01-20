@@ -4,7 +4,6 @@ import { i18n } from "discourse-i18n";
 
 export default class CommentsHeading extends Component {
   static shouldRender() {
-
     if (Site.currentProp("mobileView") && !settings.mobile_enabled) {
       return false;
     }

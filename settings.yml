@@ -17,10 +17,12 @@ blog_tag:
     en: "Topics will have blog styling applied when they have any of the tags included in this setting."
 image_display_style:
   type: enum
-  default: "responsive crop"
+  default: "image below title – full width"
   choices:
-    - responsive crop
-    - center fit
+    - no images
+    - image below title – full width
+    - image below title – centered fit
+    - title embedded in image
   description:
     en:
       "Responsive Crop - always display at 100% width, evenly cropping the image as needed.
@@ -30,9 +32,5 @@ mobile_enabled:
   type: bool
   default: false
   description:
-    en: "Enable blog post styling on mobile devices."
-no_images:
-  type: bool
-  default: false
-  description:
-    en: "Enable if you want to include the styling without images at the top."
+    en: "Enable blog post styling on mobile devices. This uses the default image
+      below title – full width style."
