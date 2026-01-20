@@ -1,0 +1,443 @@
+@use "lib/viewport";
+
+body.blog-post {
+  .blog-image-container {
+    text-align: center;
+
+    .blog-image {
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      &.--responsive-crop {
+        background-size: cover;
+        width: 100%;
+      }
+
+      @include viewport.from(sm) {
+        height: clamp(250px, 33vh, 450px);
+        margin-bottom: 1em;
+        border-radius: var(--d-border-radius);
+      }
+
+      @include viewport.until(sm) {
+        height: 440px;
+      }
+    }
+  }
+
+  #topic-title {
+    a.edit-topic .d-icon {
+      font-size: 0.5em;
+    }
+
+    @include viewport.from(sm) {
+      display: flex;
+      justify-content: center;
+
+      h1 {
+        font-size: 3em;
+      }
+
+      .title-wrapper {
+        width: 70%;
+
+        .topic-category {
+          margin-top: 0.25em;
+        }
+      }
+
+      @media screen and (width <= 1350px) {
+        .title-wrapper {
+          width: 80%;
+        }
+      }
+
+      @media screen and (width <= 924px) {
+        justify-content: left;
+      }
+    }
+
+    @include viewport.until(sm) {
+      margin-top: 1em;
+
+      h1 {
+        font-size: 1.5em;
+      }
+    }
+  }
+
+  .topic-body {
+    @include viewport.from(sm) {
+      width: 100%;
+    }
+  }
+
+  .topic-avatar {
+    @include viewport.from(sm) {
+      height: 20px;
+      width: 20px;
+      background: none;
+
+      img.avatar {
+        height: 20px;
+        width: 20px;
+      }
+
+      .avatar-flair {
+        background-size: 8px 8px;
+        width: 10px;
+        height: 10px;
+        top: unset;
+        bottom: -5px;
+        right: -3px;
+
+        .d-icon {
+          height: 0.45em;
+          width: 0.45em;
+        }
+      }
+    }
+  }
+
+  #post_1 {
+    .topic-body {
+      &.highlighted {
+        animation: none;
+      }
+
+      .contents {
+        border-top: 1px solid var(--primary-low);
+      }
+
+      @include viewport.from(sm) {
+        padding-top: 8px;
+        border-top: none;
+
+        .topic-meta-data {
+          flex-direction: column;
+          align-items: unset;
+          padding: 0;
+          margin-left: 6px;
+          margin-bottom: 2px;
+
+          .post-infos {
+            justify-content: space-between;
+
+            .post-info.edits {
+              order: 1;
+            }
+          }
+        }
+
+        .contents {
+          margin-left: -25px;
+          padding: 15px;
+        }
+      }
+
+      @include viewport.until(sm) {
+        padding-top: 0;
+
+        .topic-meta-data {
+          display: block;
+          margin-bottom: 10px;
+          margin-left: 2px;
+          font-size: 0.75em;
+
+          .names {
+            flex-wrap: nowrap;
+
+            .second,
+            .user-title {
+              flex-basis: unset;
+            }
+          }
+
+          .post-infos {
+            display: flex;
+            justify-content: space-between;
+
+            .post-info.edits {
+              float: right;
+              margin-left: 5px;
+              order: 1;
+            }
+
+            .post-info.post-date {
+              float: left;
+            }
+          }
+        }
+      }
+    }
+
+    .topic-avatar {
+      @include viewport.until(sm) {
+        height: 25px;
+        width: 25px;
+        border-top: none;
+        background: none;
+        margin-right: 5px;
+
+        img.avatar {
+          height: 25px;
+          width: 25px;
+        }
+
+        .avatar-flair {
+          background-size: 8px 8px;
+          width: 0.75em;
+          height: 0.7em;
+          top: unset;
+          bottom: -2px;
+          right: -2px;
+
+          svg {
+            height: 0.5em;
+          }
+        }
+      }
+    }
+
+    .topic-map.--op {
+      @include viewport.from(sm) {
+        padding-left: 0;
+
+        .comments-heading {
+          display: block;
+          width: 100%;
+          margin-top: 1em;
+        }
+
+        .topic-map__users-list {
+          display: none;
+        }
+      }
+    }
+
+    .cooked {
+      big {
+        font-size: 2rem;
+        line-height: 2rem;
+        letter-spacing: 1px;
+        display: inline-block;
+        font-family: Georgia, serif;
+      }
+
+      & > p:first-child + div.lightbox-wrapper {
+        display: none;
+
+        & + p {
+          margin-top: -15px;
+        }
+      }
+
+      & > p img:not(.emoji) {
+        display: none;
+      }
+
+      & > p ~ p img:not(.emoji) {
+        display: block;
+      }
+    }
+  }
+
+  .post-infos img.avatar {
+    @include viewport.from(sm) {
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  .topic-status-info,
+  .topic-timer-info,
+  .topic-area > .loading-container,
+  .small-action .small-action-desc {
+    @include viewport.from(sm) {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .post-notice {
+    @include viewport.from(sm) {
+      max-width: 519px;
+      font-size: var(--font-down-2);
+    }
+  }
+
+  .small-action {
+    @include viewport.from(sm) {
+      font-size: 0.75em;
+
+      .small-action-desc {
+        max-width: 500px;
+
+        .small-action-contents {
+          display: flex;
+          align-items: center;
+
+          .avatar {
+            height: 15px;
+            width: 15px;
+          }
+        }
+      }
+    }
+  }
+
+  .topic-meta-data {
+    @include viewport.from(sm) {
+      font-size: small;
+    }
+  }
+
+  .cooked {
+    @include viewport.from(sm) {
+      padding: 0.5em 1em;
+    }
+  }
+
+  .topic-post {
+    @include viewport.from(sm) {
+      .topic-body {
+        max-width: 500px;
+      }
+    }
+
+    &:first-child {
+      figure {
+        margin: 0;
+      }
+
+      figcaption {
+        margin-top: -16px;
+        font-size: 0.8em;
+        font-weight: bold;
+      }
+
+      blockquote {
+        background: var(--primary-very-low);
+        color: var(--primary-high);
+        border-left: 10px solid var(--primary-low-mid);
+        padding: 0.5em 10px;
+      }
+
+      blockquote::before {
+        color: var(--primary-low-mid);
+        content: open-quote;
+        font-size: 4em;
+        line-height: 0.1em;
+        vertical-align: -0.4em;
+      }
+
+      blockquote p {
+        display: inline;
+      }
+
+      @include viewport.from(sm) {
+        font-size: 1.25em;
+        line-height: 1.4;
+        padding-bottom: 0;
+        padding-top: 4px;
+
+        .topic-avatar {
+          padding-top: 4px;
+          position: static !important;
+          border-top: none;
+        }
+
+        .topic-body {
+          max-width: unset;
+        }
+
+        .cooked {
+          padding: 0;
+        }
+
+        nav.post-controls .actions,
+        .topic-map,
+        .post-admin-menu {
+          font-size: 14px;
+        }
+      }
+
+      @include viewport.until(sm) {
+        .cooked {
+          font-size: 1.25em;
+
+          .lightbox-wrapper .meta {
+            font-size: 0.75em;
+          }
+        }
+
+        nav.post-controls .actions,
+        .topic-map,
+        .post-admin-menu {
+          font-size: 0.75em;
+        }
+      }
+    }
+  }
+
+  .topic-timeline,
+  .comments-heading {
+    @include viewport.from(sm) {
+      display: none;
+    }
+  }
+
+  .topic-map.--bottom {
+    @include viewport.from(sm) {
+      display: none !important;
+    }
+  }
+
+  .timeline-toggle,
+  #topic-progress-wrapper.docked,
+  .timeline-container.timeline-docked {
+    @include viewport.from(sm) {
+      display: none !important;
+    }
+  }
+
+  .container.posts {
+    @include viewport.from(sm) {
+      justify-content: center;
+      grid-template-columns: 65% 5%;
+
+      &.row {
+        width: 750px;
+      }
+
+      .topic-navigation {
+        .d-toc-main {
+          min-width: 11.25em;
+        }
+      }
+
+      @media screen and (width <= 1350px) {
+        grid-template-columns: 65% 15%;
+
+        & > .row {
+          width: unset;
+        }
+
+        .topic-navigation {
+          margin-left: 1em;
+        }
+      }
+
+      @media screen and (width <= 924px) {
+        grid-template-columns: 100%;
+      }
+    }
+  }
+
+  .topic-area > .loading-container {
+    @include viewport.from(sm) {
+      max-width: 500px;
+    }
+  }
+}
