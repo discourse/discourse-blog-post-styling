@@ -1,5 +1,10 @@
 {
   "private": true,
+  "scripts": {
+    "prettier": "prettier --write .",
+    "lint": "eslint . && stylelint '**/*.scss'",
+    "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix"
+  },
   "devDependencies": {
     "@discourse/lint-configs": "2.25.0",
     "ember-template-lint": "7.8.1",

@@ -1,20 +1,20 @@
 blog_category:
   type: string
   default: ""
-  description: 
-    en: 'Enter the category slug of your blog category as it appears in the url. 
-         The slug is bold in the following example url: 
-         https://community.example.org/c/<b>blog-posts</b>/3
-         <br><br>
-         Note: you may use more than one category slug by comma separating the
-         slug values like: <b>blog-one,blog-two</b> <br>
-         Be sure there are no spaces after the commas.'
+  description:
+    en: "Enter the category slug of your blog category as it appears in the url.
+      The slug is bold in the following example url:
+      https://community.example.org/c/<b>blog-posts</b>/3
+      <br><br>
+      Note: you may use more than one category slug by comma separating the
+      slug values like: <b>blog-one,blog-two</b> <br>
+      Be sure there are no spaces after the commas."
 blog_tag:
   type: list
   list_type: tag
   default: ""
   description:
-    en: 'Topics will have blog styling applied when they have any of the tags included in this setting.'
+    en: "Topics will have blog styling applied when they have any of the tags included in this setting."
 image_display_style:
   type: enum
   default: "responsive crop"
@@ -22,16 +22,17 @@ image_display_style:
     - responsive crop
     - center fit
   description:
-    en: 'Responsive Crop - always display at 100% width, evenly cropping the image as needed.
-         <br>
-         Center Fit - display the full image, maintaining the aspect ratio and centering it within the page.'
+    en:
+      "Responsive Crop - always display at 100% width, evenly cropping the image as needed.
+      <br>
+      Center Fit - display the full image, maintaining the aspect ratio and centering it within the page."
 mobile_enabled:
   type: bool
   default: false
   description:
-    en: 'Enable blog post styling on mobile devices.'
+    en: "Enable blog post styling on mobile devices."
 no_images:
   type: bool
   default: false
   description:
-      en: 'Enable if you want to include the styling without images at the top.'
+    en: "Enable if you want to include the styling without images at the top."
