@@ -1,28 +1,26 @@
 @use "lib/viewport";
 
 body.blog-post {
-  .blog-image-container {
-    text-align: center;
+  // Style for the injected summary
+  .blog-summary-injected {
+    font-size: 1.25em;
+    font-style: italic;
+    color: var(--primary-high);
+    margin-top: 0.5em;
+    line-height: 1.5;
+  }
 
-    .blog-image {
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: contain;
+  .blog-image {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: clamp(250px, 33vh, 450px);
+    margin-bottom: 1em;
+    border-radius: var(--d-border-radius);
 
-      &.--responsive-crop {
-        background-size: cover;
-        width: 100%;
-      }
-
-      @include viewport.from(sm) {
-        height: clamp(250px, 33vh, 450px);
-        margin-bottom: 1em;
-        border-radius: var(--d-border-radius);
-      }
-
-      @include viewport.until(sm) {
-        height: 440px;
-      }
+    &.--responsive-crop {
+      background-size: cover;
+      width: 100%;
     }
   }
 
