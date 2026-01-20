@@ -183,6 +183,12 @@
     }
   }
 
+  &__drop-cap {
+    font-size: var(--font-up-6);
+    margin-right: 0.1em;
+    line-height: 1;
+  }
+
   #post_1 {
     .topic-body {
       &.highlighted {

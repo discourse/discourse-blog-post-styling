@@ -89,6 +89,49 @@ function removeStyleClasses() {
   document.body.classList.remove(...STYLE_CLASSES);
 }
 
+function wrapFirstLetter() {
+  const cookedContent = document.querySelector("#post_1 .cooked");
+  if (!cookedContent || cookedContent.querySelector(".blog-post__drop-cap")) {
+    return;
+  }
+
+  const firstParagraph = Array.from(cookedContent.querySelectorAll("p")).find(
+    (p) => p.textContent.trim().length > 0
+  );
+
+  if (!firstParagraph) {
+    return;
+  }
+
+  // Get the first text node
+  const walker = document.createTreeWalker(
+    firstParagraph,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode: (node) =>
+        node.textContent.trim().length > 0
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_SKIP,
+    }
+  );
+
+  const firstTextNode = walker.nextNode();
+  if (!firstTextNode) {
+    return;
+  }
+
+  const text = firstTextNode.textContent;
+  const firstLetter = text.charAt(0);
+  const restOfText = text.slice(1);
+
+  const span = document.createElement("span");
+  span.className = "blog-post__drop-cap";
+  span.textContent = firstLetter;
+
+  firstTextNode.textContent = restOfText;
+  firstTextNode.parentNode.insertBefore(span, firstTextNode);
+}
+
 export default apiInitializer("1.0", (api) => {
   api.onPageChange(() => {
     const controller = api.container.lookup("controller:topic");
@@ -104,6 +147,7 @@ export default apiInitializer("1.0", (api) => {
       }
 
       extractAndInjectSummary();
+      wrapFirstLetter();
     } else {
       document.body.classList.remove("blog-post");
       removeStyleClasses();
