@@ -57,195 +57,193 @@
   @return $result;
 }
 
-@if $mobile_enabled == "true" {
-  $values: $blog_category;
-  $split-values: str-split($values, ",");
+$values: $blog_category;
+$split-values: str-split($values, ",");
 
-  @each $value in $split-values {
-    .category-#{$value} {
-      @extend %blog-category;
-    }
+@each $value in $split-values {
+  .category-#{$value} {
+    @extend %blog-category;
+  }
+}
+
+$values: $blog_tag;
+$split-values: str-split($values, "|");
+
+@each $value in $split-values {
+  .tag-#{$value} {
+    @extend %blog-tag;
+  }
+}
+
+%blog-tag,
+%blog-category {
+  #topic-title {
+    margin-top: 1em;
   }
 
-  $values: $blog_tag;
-  $split-values: str-split($values, "|");
+  .blog-image-container {
+    text-align: center;
 
-  @each $value in $split-values {
-    .tag-#{$value} {
-      @extend %blog-tag;
-    }
-  }
+    .blog-image {
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 440px;
 
-  %blog-tag,
-  %blog-category {
-    #topic-title {
-      margin-top: 1em;
-    }
-
-    .blog-image-container {
-      text-align: center;
-
-      .blog-image {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        height: 440px;
-
-        @if $image_display_style == "responsive crop" {
-          background-size: cover;
-          width: 100%;
-        }
+      &.--responsive-crop {
+        background-size: cover;
+        width: 100%;
       }
     }
+  }
 
-    #post_1 {
-      .topic-avatar {
+  #post_1 {
+    .topic-avatar {
+      height: 25px;
+      width: 25px;
+      border-top: none;
+      background: none;
+      margin-right: 5px;
+
+      img.avatar {
         height: 25px;
         width: 25px;
-        border-top: none;
-        background: none;
-        margin-right: 5px;
-
-        img.avatar {
-          height: 25px;
-          width: 25px;
-        }
-
-        .avatar-flair {
-          background-size: 8px 8px;
-          width: 0.75em;
-          height: 0.7em;
-          top: unset;
-          bottom: -2px;
-          right: -2px;
-
-          svg {
-            height: 0.5em;
-          }
-        }
       }
 
-      .topic-body {
-        padding-top: 0;
+      .avatar-flair {
+        background-size: 8px 8px;
+        width: 0.75em;
+        height: 0.7em;
+        top: unset;
+        bottom: -2px;
+        right: -2px;
 
-        &.highlighted {
-          animation: none;
-        }
-
-        .topic-meta-data {
-          display: block;
-          margin-bottom: 10px;
-          margin-left: 2px;
-          font-size: 0.75em;
-
-          .names {
-            flex-wrap: nowrap;
-
-            .second,
-            .user-title {
-              flex-basis: unset;
-            }
-          }
-
-          .post-infos {
-            display: flex;
-            justify-content: space-between;
-
-            .post-info.edits {
-              float: right;
-              margin-left: 5px;
-              order: 1;
-            }
-
-            .post-info.post-date {
-              float: left;
-            }
-          }
-        }
-
-        .contents {
-          border-top: 1px solid var(--primary-low);
-        }
-      }
-
-      .cooked {
-        big {
-          font-size: 2rem;
-          line-height: 2rem;
-          letter-spacing: 1px;
-          display: inline-block;
-          font-family: Georgia, serif;
-        }
-
-        & > p:first-child + div.lightbox-wrapper {
-          display: none;
-
-          & + p {
-            margin-top: -15px;
-          }
-        }
-
-        & > p img:not(.emoji) {
-          display: none;
-        }
-
-        & > p ~ p img:not(.emoji) {
-          display: block;
+        svg {
+          height: 0.5em;
         }
       }
     }
 
-    #topic-title h1 {
-      font-size: 1.5em;
-    }
+    .topic-body {
+      padding-top: 0;
 
-    #topic-title a.edit-topic .d-icon {
-      font-size: 0.5em;
-    }
+      &.highlighted {
+        animation: none;
+      }
 
-    .topic-post:first-child {
-      .cooked {
-        font-size: 1.25em;
+      .topic-meta-data {
+        display: block;
+        margin-bottom: 10px;
+        margin-left: 2px;
+        font-size: 0.75em;
 
-        .lightbox-wrapper .meta {
-          font-size: 0.75em;
+        .names {
+          flex-wrap: nowrap;
+
+          .second,
+          .user-title {
+            flex-basis: unset;
+          }
+        }
+
+        .post-infos {
+          display: flex;
+          justify-content: space-between;
+
+          .post-info.edits {
+            float: right;
+            margin-left: 5px;
+            order: 1;
+          }
+
+          .post-info.post-date {
+            float: left;
+          }
         }
       }
 
-      nav.post-controls .actions,
-      .topic-map,
-      .post-admin-menu {
+      .contents {
+        border-top: 1px solid var(--primary-low);
+      }
+    }
+
+    .cooked {
+      big {
+        font-size: 2rem;
+        line-height: 2rem;
+        letter-spacing: 1px;
+        display: inline-block;
+        font-family: Georgia, serif;
+      }
+
+      & > p:first-child + div.lightbox-wrapper {
+        display: none;
+
+        & + p {
+          margin-top: -15px;
+        }
+      }
+
+      & > p img:not(.emoji) {
+        display: none;
+      }
+
+      & > p ~ p img:not(.emoji) {
+        display: block;
+      }
+    }
+  }
+
+  #topic-title h1 {
+    font-size: 1.5em;
+  }
+
+  #topic-title a.edit-topic .d-icon {
+    font-size: 0.5em;
+  }
+
+  .topic-post:first-child {
+    .cooked {
+      font-size: 1.25em;
+
+      .lightbox-wrapper .meta {
         font-size: 0.75em;
       }
+    }
 
-      figure {
-        margin: 0;
-      }
+    nav.post-controls .actions,
+    .topic-map,
+    .post-admin-menu {
+      font-size: 0.75em;
+    }
 
-      figcaption {
-        margin-top: -16px;
-        font-size: 0.8em;
-        font-weight: bold;
-      }
+    figure {
+      margin: 0;
+    }
 
-      blockquote {
-        background: var(--primary-very-low);
-        color: var(--primary-high);
-        border-left: 10px solid var(--primary-low-mid);
-        padding: 0.5em 10px;
-      }
+    figcaption {
+      margin-top: -16px;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
 
-      blockquote::before {
-        color: var(--primary-low-mid);
-        content: open-quote;
-        font-size: 4em;
-        line-height: 0.1em;
-        vertical-align: -0.4em;
-      }
+    blockquote {
+      background: var(--primary-very-low);
+      color: var(--primary-high);
+      border-left: 10px solid var(--primary-low-mid);
+      padding: 0.5em 10px;
+    }
 
-      blockquote p {
-        display: inline;
-      }
+    blockquote::before {
+      color: var(--primary-low-mid);
+      content: open-quote;
+      font-size: 4em;
+      line-height: 0.1em;
+      vertical-align: -0.4em;
+    }
+
+    blockquote p {
+      display: inline;
     }
   }
 }

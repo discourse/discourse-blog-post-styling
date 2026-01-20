@@ -91,10 +91,11 @@ $split-values: str-split($values, "|");
       background-position: center center;
       background-repeat: no-repeat;
       background-size: contain;
-      height: 440px;
+      height: clamp(250px, 33vh, 450px);
       margin-bottom: 1em;
+      border-radius: var(--d-border-radius);
 
-      @if $image_display_style == "responsive crop" {
+      &.--responsive-crop {
         background-size: cover;
         width: 100%;
       }
