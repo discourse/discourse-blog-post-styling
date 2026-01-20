@@ -1,9 +1,14 @@
 import Component from "@glimmer/component";
-import { htmlSafe } from "@ember/template";
+import { eq } from "truth-helpers";
 import Category from "discourse/models/category";
+import Site from "discourse/models/site";
 
 export default class BlogImage extends Component {
   static shouldRender() {
+
+    if (Site.currentProp("mobileView") && !settings.mobile_enabled) {
+      return false;
+    }
     // Don't render if no_images is enabled or no categories/tags are configured
     if (settings.no_images) {
       return false;
@@ -49,15 +54,15 @@ export default class BlogImage extends Component {
     return this.topic?.thumbnails?.[0]?.url;
   }
 
-  get backgroundImageStyle() {
-    return htmlSafe(`background-image: url('${this.imageURL}')`);
-  }
-
   <template>
     {{#if this.isBlogTopic}}
       {{#if this.imageURL}}
         <div class="blog-image-container">
-          <div class="blog-image" style={{this.backgroundImageStyle}}></div>
+          <div
+            class="blog-image
+              {{if (eq settings.image_display_style 'responsive crop') '--responsive-crop'}}"
+            style="background-image: url('{{this.imageURL}}')"
+          ></div>
         </div>
       {{/if}}
     {{/if}}
