@@ -1,5 +1,4 @@
 import Component from "@glimmer/component";
-import { eq } from "truth-helpers";
 import Category from "discourse/models/category";
 
 export default class BlogImage extends Component {
@@ -41,13 +40,7 @@ export default class BlogImage extends Component {
       {{#if this.imageURL}}
         <div class="blog-image-container">
           <div
-            class="blog-image
-              {{if
-                (eq
-                  settings.image_display_style 'image below title – full width'
-                )
-                '--full-width'
-              }}"
+            class="blog-post__image"
             style="background-image: url('{{this.imageURL}}')"
           ></div>
         </div>

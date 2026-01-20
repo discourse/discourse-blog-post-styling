@@ -6,7 +6,7 @@
     display: none;
   }
 
-  &.--blog-style-full-width {
+  &.--blog-image-full-width {
     .title-wrapper {
       margin-inline: auto;
       text-align: center;
@@ -54,14 +54,14 @@
     margin-block: var(--space-6);
   }
 
-  .blog-image {
+  &__image {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
     height: clamp(350px, 45vh, 650px);
     border-radius: var(--d-border-radius);
 
-    &.--full-width {
+    .--blog-image-full-width & {
       background-size: cover;
       width: 100%;
     }
