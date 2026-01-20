@@ -1,0 +1,40 @@
+import Component from "@glimmer/component";
+import avatar from "discourse/helpers/avatar";
+import formatDate from "discourse/helpers/format-date";
+import Site from "discourse/models/site";
+import BlogImage from "../../components/blog-image";
+
+export default class BlogImageAfterTitle extends Component {
+  static shouldRender() {
+    if (Site.currentProp("mobileView") && !settings.mobile_enabled) {
+      return false;
+    }
+    if (settings.image_display_style === "no images") {
+      return false;
+    }
+    // Only render in this outlet if "image below title – full width"
+    if (settings.image_display_style !== "image below title – full width") {
+      return false;
+    }
+    return settings.blog_category?.length > 0 || settings.blog_tag?.length > 0;
+  }
+
+  get topic() {
+    return this.args.outletArgs.model;
+  }
+
+  <template>
+    <div class="blog-post__meta">
+      <div class="blog-post__avatar">
+        {{avatar this.topic.details.created_by imageSize="medium"}}
+      </div>
+      <span
+        class="blog-post__author"
+      >{{this.topic.details.created_by.username}}</span>
+      <span class="blog-post__publish-date">{{formatDate
+          this.topic.created_at
+        }}</span>
+    </div>
+    <BlogImage @topic={{this.topic}} />
+  </template>
+}

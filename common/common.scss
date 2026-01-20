@@ -1,24 +1,67 @@
 @use "lib/viewport";
 
-body.blog-post {
-  // Style for the injected summary
-  .blog-summary-injected {
-    font-size: 1.25em;
-    font-style: italic;
-    color: var(--primary-high);
-    margin-top: 0.5em;
-    line-height: 1.5;
+.blog-post {
+  .topic-map__contents,
+  .post-controls .post-action-menu__solved-unaccepted {
+    display: none;
+  }
+
+  &.--blog-style-full-width {
+    .title-wrapper {
+      margin-inline: auto;
+      text-align: center;
+      justify-content: center;
+    }
+
+    #post_1 {
+      .topic-avatar,
+      .topic-meta-data {
+        // hides the edit history icon too, need to find a solution
+        display: none;
+      }
+    }
+  }
+
+  &__meta {
+    display: grid;
+    grid-template-areas: "avatar name" "avatar date";
+    column-gap: var(--space-2);
+    font-size: var(--font-down-1-rem);
+    grid-template-columns: min-content min-content;
+    justify-content: center;
+    margin-bottom: var(--space-6);
+  }
+
+  &__avatar {
+    grid-area: avatar;
+  }
+
+  &__author {
+    grid-area: name;
+    font-weight: 700;
+    align-self: flex-end;
+  }
+
+  &__publish-date {
+    white-space: nowrap;
+    grid-area: date;
+    color: var(--primary-medium);
+    align-self: flex-start;
+  }
+
+  &__summary {
+    font-size: var(--font-up-1-rem);
+    margin-block: var(--space-6);
   }
 
   .blog-image {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
-    height: clamp(250px, 33vh, 450px);
-    margin-bottom: 1em;
+    height: clamp(350px, 45vh, 650px);
     border-radius: var(--d-border-radius);
 
-    &.--responsive-crop {
+    &.--full-width {
       background-size: cover;
       width: 100%;
     }
@@ -29,12 +72,46 @@ body.blog-post {
       font-size: 0.5em;
     }
 
+    &:has(.blog-image-container) {
+      flex-direction: column;
+    }
+
+    &.--embedded {
+      height: calc(clamp(350px, 45vh, 650px) / 3);
+      margin-top: calc(clamp(350px, 45vh, 650px) / -3);
+      opacity: 1;
+      background: rgb(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      bottom: var(--space-4);
+      left: var(--space-4);
+      right: var(--space-4);
+      width: calc(100% - var(--space-8));
+      border-radius: var(--d-border-radius);
+      border: 1px solid rgb(255, 255, 255, 0.1);
+
+      h1 a {
+        color: white;
+      }
+    }
+
     @include viewport.from(sm) {
       display: flex;
       justify-content: center;
 
       h1 {
-        font-size: 3em;
+        font-size: 4rem;
+        font-weight: normal;
+
+        .edit-topic {
+          height: 0.5em;
+          width: 0.5em;
+          margin-left: var(--space-4);
+
+          &__wrapper {
+            display: inline-flex;
+            align-items: center;
+          }
+        }
       }
 
       .title-wrapper {
@@ -65,35 +142,43 @@ body.blog-post {
     }
   }
 
+  .post__topic-map {
+    border-top: 0;
+  }
+
+  article:not(#post_1) .post__row {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--primary-low);
+  }
+
   .topic-body {
-    @include viewport.from(sm) {
-      width: 100%;
-    }
+    width: 100%;
+    padding: 0;
+    border-top: 0;
   }
 
   .topic-avatar {
-    @include viewport.from(sm) {
+    width: 20px;
+    background: none;
+    padding-top: 0;
+    border-top: 0;
+
+    img.avatar {
       height: 20px;
       width: 20px;
-      background: none;
+    }
 
-      img.avatar {
-        height: 20px;
-        width: 20px;
-      }
+    .avatar-flair {
+      background-size: 8px 8px;
+      width: 10px;
+      height: 10px;
+      top: unset;
+      bottom: -5px;
+      right: -3px;
 
-      .avatar-flair {
-        background-size: 8px 8px;
-        width: 10px;
-        height: 10px;
-        top: unset;
-        bottom: -5px;
-        right: -3px;
-
-        .d-icon {
-          height: 0.45em;
-          width: 0.45em;
-        }
+      .d-icon {
+        height: 0.45em;
+        width: 0.45em;
       }
     }
   }
@@ -102,10 +187,6 @@ body.blog-post {
     .topic-body {
       &.highlighted {
         animation: none;
-      }
-
-      .contents {
-        border-top: 1px solid var(--primary-low);
       }
 
       @include viewport.from(sm) {
@@ -126,11 +207,6 @@ body.blog-post {
               order: 1;
             }
           }
-        }
-
-        .contents {
-          margin-left: -25px;
-          padding: 15px;
         }
       }
 
@@ -205,7 +281,11 @@ body.blog-post {
         .comments-heading {
           display: block;
           width: 100%;
-          margin-top: 1em;
+          margin-block: 0 var(--space-1);
+
+          h2 {
+            margin: 0;
+          }
         }
 
         .topic-map__users-list {
@@ -270,8 +350,6 @@ body.blog-post {
       font-size: 0.75em;
 
       .small-action-desc {
-        max-width: 500px;
-
         .small-action-contents {
           display: flex;
           align-items: center;
@@ -298,12 +376,6 @@ body.blog-post {
   }
 
   .topic-post {
-    @include viewport.from(sm) {
-      .topic-body {
-        max-width: 500px;
-      }
-    }
-
     &:first-child {
       figure {
         margin: 0;
@@ -395,40 +467,17 @@ body.blog-post {
   .timeline-toggle,
   #topic-progress-wrapper.docked,
   .timeline-container.timeline-docked {
-    @include viewport.from(sm) {
-      display: none !important;
-    }
+    display: none;
   }
 
   .container.posts {
-    @include viewport.from(sm) {
-      justify-content: center;
-      grid-template-columns: 65% 5%;
+    grid-template-areas: "posts";
+    grid-template-columns: 70%;
+    justify-content: center;
 
-      &.row {
-        width: 750px;
-      }
-
-      .topic-navigation {
-        .d-toc-main {
-          min-width: 11.25em;
-        }
-      }
-
-      @media screen and (width <= 1350px) {
-        grid-template-columns: 65% 15%;
-
-        & > .row {
-          width: unset;
-        }
-
-        .topic-navigation {
-          margin-left: 1em;
-        }
-      }
-
-      @media screen and (width <= 924px) {
-        grid-template-columns: 100%;
+    .topic-navigation {
+      .d-toc-main {
+        min-width: 11.25em;
       }
     }
   }
