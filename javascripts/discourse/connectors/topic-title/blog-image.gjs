@@ -4,12 +4,12 @@ import formatDate from "discourse/helpers/format-date";
 import Site from "discourse/models/site";
 import BlogImage from "../../components/blog-image";
 
-export default class BlogImageAfterTitle extends Component {
+export default class BlogImageBelowTitle extends Component {
   static shouldRender() {
     if (Site.currentProp("mobileView") && !settings.mobile_enabled) {
       return false;
     }
-    if (settings.image_position === "none") {
+    if (settings.image_position !== "below title") {
       return false;
     }
     return settings.blog_category?.length > 0 || settings.blog_tag?.length > 0;
