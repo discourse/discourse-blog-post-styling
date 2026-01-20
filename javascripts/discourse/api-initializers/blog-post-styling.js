@@ -36,6 +36,36 @@ function isBlogTopic(topic) {
   return hasCategory || hasTag;
 }
 
+function extractAndInjectSummary() {
+  document.querySelector(".blog-summary-injected")?.remove();
+
+  const cookedContent = document.querySelector("#post_1 .cooked");
+  if (!cookedContent) {
+    return;
+  }
+
+  const summaryMatch = cookedContent.innerHTML.match(
+    /\[summary\]([\s\S]*?)\[\/summary\]/i
+  );
+
+  if (summaryMatch) {
+    const summaryText = summaryMatch[1].trim();
+
+    cookedContent.innerHTML = cookedContent.innerHTML.replace(
+      /\[summary\][\s\S]*?\[\/summary\]/i,
+      ""
+    );
+
+    const titleWrapper = document.querySelector("#topic-title .title-wrapper");
+    if (titleWrapper) {
+      const summaryElement = document.createElement("p");
+      summaryElement.className = "blog-summary-injected";
+      summaryElement.innerHTML = summaryText;
+      titleWrapper.appendChild(summaryElement);
+    }
+  }
+}
+
 export default apiInitializer("1.0", (api) => {
   api.onPageChange(() => {
     const controller = api.container.lookup("controller:topic");
@@ -43,8 +73,10 @@ export default apiInitializer("1.0", (api) => {
 
     if (isBlogTopic(topic)) {
       document.body.classList.add("blog-post");
+      extractAndInjectSummary();
     } else {
       document.body.classList.remove("blog-post");
+      document.querySelector(".blog-summary-injected")?.remove();
     }
   });
 });
