@@ -66,27 +66,37 @@ function extractAndInjectSummary() {
   }
 }
 
-const STYLE_CLASSES = [
-  "--blog-style-full-width",
-  "--blog-style-centered",
-  "--blog-style-embedded",
+const SIZE_CLASSES = ["--blog-image-full-width", "--blog-image-fixed"];
+const POSITION_CLASSES = [
+  "--blog-image-above-title",
+  "--blog-image-below-title",
+  "--blog-image-embedded",
 ];
 
-function getStyleClass() {
-  switch (settings.image_display_style) {
-    case "image below title – full width":
-      return "--blog-style-full-width";
-    case "image below title – centered fit":
-      return "--blog-style-centered";
-    case "title embedded in image":
-      return "--blog-style-embedded";
+function getSizeClass() {
+  if (settings.image_position === "embedded in title") {
+    return "--blog-image-full-width";
+  }
+  return settings.image_size === "full width"
+    ? "--blog-image-full-width"
+    : "--blog-image-fixed";
+}
+
+function getPositionClass() {
+  switch (settings.image_position) {
+    case "above title":
+      return "--blog-image-above-title";
+    case "below title":
+      return "--blog-image-below-title";
+    case "embedded in title":
+      return "--blog-image-embedded";
     default:
       return null;
   }
 }
 
 function removeStyleClasses() {
-  document.body.classList.remove(...STYLE_CLASSES);
+  document.body.classList.remove(...SIZE_CLASSES, ...POSITION_CLASSES);
 }
 
 function wrapFirstLetter() {
@@ -141,9 +151,13 @@ export default apiInitializer("1.0", (api) => {
       document.body.classList.add("blog-post");
 
       removeStyleClasses();
-      const styleClass = getStyleClass();
-      if (styleClass) {
-        document.body.classList.add(styleClass);
+      const sizeClass = getSizeClass();
+      const positionClass = getPositionClass();
+      if (sizeClass) {
+        document.body.classList.add(sizeClass);
+      }
+      if (positionClass) {
+        document.body.classList.add(positionClass);
       }
 
       extractAndInjectSummary();

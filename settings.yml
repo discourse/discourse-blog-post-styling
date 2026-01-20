@@ -15,19 +15,24 @@ blog_tag:
   default: ""
   description:
     en: "Topics will have blog styling applied when they have any of the tags included in this setting."
-image_display_style:
+image_position:
   type: enum
-  default: "image below title – full width"
+  default: "below title"
   choices:
-    - no images
-    - image below title – full width
-    - image below title – centered fit
-    - title embedded in image
+    - none
+    - above title
+    - below title
+    - embedded in title
   description:
-    en:
-      "Responsive Crop - always display at 100% width, evenly cropping the image as needed.
-      <br>
-      Center Fit - display the full image, maintaining the aspect ratio and centering it within the page."
+    en: "Choose where the featured image appears relative to the title. Note: 'embedded in title' requires 'full width' image size."
+image_size:
+  type: enum
+  default: "full width"
+  choices:
+    - full width
+    - fixed
+  description:
+    en: "Full width - image spans the full width of the content area.<br>Fixed - image maintains its aspect ratio and centers within the content area."
 mobile_enabled:
   type: bool
   default: false

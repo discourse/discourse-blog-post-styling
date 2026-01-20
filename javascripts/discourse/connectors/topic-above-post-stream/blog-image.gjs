@@ -7,11 +7,11 @@ export default class BlogImageAbovePostStream extends Component {
     if (Site.currentProp("mobileView") && !settings.mobile_enabled) {
       return false;
     }
-    if (settings.image_display_style === "no images") {
+    if (settings.image_position === "no images") {
       return false;
     }
     // Only render in this outlet if NOT "image below title – full width"
-    if (settings.image_display_style === "image below title – full width") {
+    if (settings.image_position === "below title") {
       return false;
     }
     return settings.blog_category?.length > 0 || settings.blog_tag?.length > 0;
