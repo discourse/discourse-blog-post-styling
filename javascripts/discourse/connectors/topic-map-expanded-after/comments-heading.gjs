@@ -1,13 +1,11 @@
 import Component from "@glimmer/component";
-import Site from "discourse/models/site";
 import { i18n } from "discourse-i18n";
 
 export default class CommentsHeading extends Component {
-  static shouldRender() {
-    if (Site.currentProp("mobileView") && !settings.mobile_enabled) {
+  static shouldRender(args, context) {
+    if (!context.capabilities.viewport.sm && !settings.mobile_enabled) {
       return false;
     }
-    // Only render if blog categories or tags are configured
     return settings.blog_category?.length > 0 || settings.blog_tag?.length > 0;
   }
 
