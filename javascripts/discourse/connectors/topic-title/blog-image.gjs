@@ -1,12 +1,12 @@
 import Component from "@glimmer/component";
 import avatar from "discourse/helpers/avatar";
 import formatDate from "discourse/helpers/format-date";
-import Site from "discourse/models/site";
 import BlogImage from "../../components/blog-image";
 
 export default class BlogImageBelowTitle extends Component {
-  static shouldRender() {
-    if (Site.currentProp("mobileView") && !settings.mobile_enabled) {
+  static shouldRender(args, context) {
+    const capabilities = context.capabilities;
+    if (!capabilities.viewport.sm && !settings.mobile_enabled) {
       return false;
     }
     if (settings.image_position !== "below title") {
