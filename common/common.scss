@@ -1,16 +1,25 @@
 @use "lib/viewport";
 
 .blog-post {
+  --topic-avatar-width: 20px;
+
   .topic-map__contents,
-  .post-controls .post-action-menu__solved-unaccepted {
+  .with-timeline {
     display: none;
   }
 
   &.--blog-image-below-title {
-    .title-wrapper {
-      margin-inline: auto;
-      text-align: center;
-      justify-content: center;
+    #topic-title {
+      .title-wrapper {
+        margin-inline: auto;
+        text-align: center;
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 4rem;
+        font-weight: 500;
+      }
     }
 
     #post_1 {
@@ -19,6 +28,41 @@
         // hides the edit history icon too, need to find a solution
         display: none;
       }
+    }
+  }
+
+  &.--blog-image-above-title {
+    #topic-title {
+      margin-top: var(--space-4);
+
+      h1 {
+        font-size: 3em;
+        font-weight: bold;
+      }
+    }
+
+    .blog-post__summary {
+      display: none;
+    }
+
+    .topic-meta-data {
+      padding-bottom: var(--space-4);
+    }
+
+    article#post_1 .post__regular {
+      margin-left: -20px;
+      border-top: 1px solid var(--primary-low);
+    }
+  }
+
+  .edit-topic {
+    height: 0.75em;
+    width: 0.75em;
+    margin-left: var(--space-4);
+
+    &__wrapper {
+      display: inline-flex;
+      align-items: center;
     }
   }
 
@@ -76,43 +120,9 @@
       flex-direction: column;
     }
 
-    &.--embedded {
-      height: calc(clamp(350px, 45vh, 650px) / 3);
-      margin-top: calc(clamp(350px, 45vh, 650px) / -3);
-      opacity: 1;
-      background: rgb(255, 255, 255, 0.2);
-      backdrop-filter: blur(8px);
-      bottom: var(--space-4);
-      left: var(--space-4);
-      right: var(--space-4);
-      width: calc(100% - var(--space-8));
-      border-radius: var(--d-border-radius);
-      border: 1px solid rgb(255, 255, 255, 0.1);
-
-      h1 a {
-        color: white;
-      }
-    }
-
     @include viewport.from(sm) {
       display: flex;
       justify-content: center;
-
-      h1 {
-        font-size: 4rem;
-        font-weight: normal;
-
-        .edit-topic {
-          height: 0.5em;
-          width: 0.5em;
-          margin-left: var(--space-4);
-
-          &__wrapper {
-            display: inline-flex;
-            align-items: center;
-          }
-        }
-      }
 
       .title-wrapper {
         width: 70%;
@@ -120,16 +130,6 @@
         .topic-category {
           margin-top: 0.25em;
         }
-      }
-
-      @media screen and (width <= 1350px) {
-        .title-wrapper {
-          width: 80%;
-        }
-      }
-
-      @media screen and (width <= 924px) {
-        justify-content: left;
       }
     }
 
@@ -146,22 +146,12 @@
     border-top: 0;
   }
 
-  article:not(#post_1) .post__row {
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--primary-low);
-  }
-
   .topic-body {
     width: 100%;
-    padding: 0;
-    border-top: 0;
   }
 
   .topic-avatar {
-    width: 20px;
-    background: none;
-    padding-top: 0;
-    border-top: 0;
+    padding-top: 0.6rem;
 
     img.avatar {
       height: 20px;
@@ -194,24 +184,20 @@
       &.highlighted {
         animation: none;
       }
+      border-top: none;
 
-      @include viewport.from(sm) {
-        padding-top: 8px;
-        border-top: none;
+      .topic-meta-data {
+        flex-direction: column;
+        align-items: unset;
+        padding-inline: 0;
+        margin-left: 6px;
+        margin-bottom: 2px;
 
-        .topic-meta-data {
-          flex-direction: column;
-          align-items: unset;
-          padding: 0;
-          margin-left: 6px;
-          margin-bottom: 2px;
+        .post-infos {
+          justify-content: space-between;
 
-          .post-infos {
-            justify-content: space-between;
-
-            .post-info.edits {
-              order: 1;
-            }
+          .post-info.edits {
+            order: 1;
           }
         }
       }
@@ -383,6 +369,8 @@
 
   .topic-post {
     &:first-child {
+      font-size: var(--font-up-1);
+
       figure {
         margin: 0;
       }
@@ -411,32 +399,27 @@
       blockquote p {
         display: inline;
       }
+      line-height: 1.4;
+      padding-bottom: 0;
+      padding-top: 4px;
 
-      @include viewport.from(sm) {
-        font-size: 1.25em;
-        line-height: 1.4;
-        padding-bottom: 0;
-        padding-top: 4px;
+      .topic-avatar {
+        position: static !important;
+        border-top: none;
+      }
 
-        .topic-avatar {
-          padding-top: 4px;
-          position: static !important;
-          border-top: none;
-        }
+      .topic-body {
+        max-width: unset;
+      }
 
-        .topic-body {
-          max-width: unset;
-        }
+      .cooked {
+        padding: 0;
+      }
 
-        .cooked {
-          padding: 0;
-        }
-
-        nav.post-controls .actions,
-        .topic-map,
-        .post-admin-menu {
-          font-size: 14px;
-        }
+      nav.post-controls .actions,
+      .topic-map,
+      .post-admin-menu {
+        font-size: 14px;
       }
 
       @include viewport.until(sm) {
@@ -485,12 +468,6 @@
       .d-toc-main {
         min-width: 11.25em;
       }
-    }
-  }
-
-  .topic-area > .loading-container {
-    @include viewport.from(sm) {
-      max-width: 500px;
     }
   }
 }
