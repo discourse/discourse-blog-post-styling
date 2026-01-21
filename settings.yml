@@ -23,18 +23,17 @@ image_position:
     - above title
     - below title
   description:
-    en: "Choose where the featured image appears relative to the title."
+    en: "Choose where the featured image appears relative to the title. Only above title will include a summary."
 image_size:
   type: enum
   default: "full width"
   choices:
     - full width
-    - fixed
+    - centered
   description:
-    en: "Full width - image spans the full width of the content area.<br>Fixed - image maintains its aspect ratio and centers within the content area."
+    en: "Full width - image spans the full width of the content area.<br>Centered - image maintains its aspect ratio and centers within the content area."
 mobile_enabled:
   type: bool
   default: false
   description:
-    en: "Enable blog post styling on mobile devices. This uses the default image
-      below title – full width style."
+    en: "Enable blog post styling on mobile devices. This uses the default style: full width image, positioned below the title."
