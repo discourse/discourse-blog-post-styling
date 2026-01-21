@@ -36,6 +36,17 @@ function isBlogTopic(topic) {
   return hasCategory || hasTag;
 }
 
+function removeSummaryTags() {
+  const cookedContent = document.querySelector("#post_1 .cooked");
+  if (!cookedContent) {
+    return;
+  }
+  cookedContent.innerHTML = cookedContent.innerHTML.replace(
+    /\[summary\][\s\S]*?\[\/summary\]/i,
+    ""
+  );
+}
+
 function extractAndInjectSummary() {
   document.querySelector(".blog-post__summary")?.remove();
 
@@ -70,13 +81,9 @@ const SIZE_CLASSES = ["--blog-image-full-width", "--blog-image-fixed"];
 const POSITION_CLASSES = [
   "--blog-image-above-title",
   "--blog-image-below-title",
-  "--blog-image-embedded",
 ];
 
 function getSizeClass() {
-  if (settings.image_position === "embedded in title") {
-    return "--blog-image-full-width";
-  }
   return settings.image_size === "full width"
     ? "--blog-image-full-width"
     : "--blog-image-fixed";
@@ -88,8 +95,6 @@ function getPositionClass() {
       return "--blog-image-above-title";
     case "below title":
       return "--blog-image-below-title";
-    case "embedded in title":
-      return "--blog-image-embedded";
     default:
       return null;
   }
@@ -148,6 +153,16 @@ export default apiInitializer("1.0", (api) => {
     const topic = controller?.model;
 
     if (isBlogTopic(topic)) {
+      const capabilities = api.container.lookup("service:capabilities");
+      const isMobile = !capabilities.viewport.sm;
+      if (isMobile && !settings.mobile_enabled) {
+        document.body.classList.remove("blog-post");
+        removeStyleClasses();
+        document.querySelector(".blog-post__summary")?.remove();
+        removeSummaryTags();
+        return;
+      }
+
       document.body.classList.add("blog-post");
 
       removeStyleClasses();

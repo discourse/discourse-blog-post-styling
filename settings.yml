@@ -22,9 +22,8 @@ image_position:
     - none
     - above title
     - below title
-    - embedded in title
   description:
-    en: "Choose where the featured image appears relative to the title. Note: 'embedded in title' requires 'full width' image size."
+    en: "Choose where the featured image appears relative to the title."
 image_size:
   type: enum
   default: "full width"
