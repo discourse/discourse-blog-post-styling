@@ -77,7 +77,7 @@ function extractAndInjectSummary() {
   }
 }
 
-const SIZE_CLASSES = ["--blog-image-full-width", "--blog-image-fixed"];
+const SIZE_CLASSES = ["--blog-image-full-width", "--blog-image-centered"];
 const POSITION_CLASSES = [
   "--blog-image-above-title",
   "--blog-image-below-title",
@@ -86,7 +86,7 @@ const POSITION_CLASSES = [
 function getSizeClass() {
   return settings.image_size === "full width"
     ? "--blog-image-full-width"
-    : "--blog-image-fixed";
+    : "--blog-image-centered";
 }
 
 function getPositionClass() {
