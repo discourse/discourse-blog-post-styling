@@ -5,8 +5,7 @@ import BlogImage from "../../components/blog-image";
 
 export default class BlogImageBelowTitle extends Component {
   static shouldRender(args, context) {
-    const capabilities = context.capabilities;
-    if (!capabilities.viewport.sm && !settings.mobile_enabled) {
+    if (!context.capabilities.viewport.sm && !settings.mobile_enabled) {
       return false;
     }
     if (settings.image_position !== "below title") {

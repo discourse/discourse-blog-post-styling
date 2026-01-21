@@ -3,9 +3,7 @@ import BlogImage from "../../components/blog-image";
 
 export default class BlogImageAbovePostStream extends Component {
   static shouldRender(args, context) {
-    const capabilities = context.capabilities;
-    if (!capabilities.viewport.sm && !settings.mobile_enabled) {
-      console.log(capabilities.viewport.sm, settings.mobile_enabled);
+    if (!context.capabilities.viewport.sm && !settings.mobile_enabled) {
       return false;
     }
     if (settings.image_position !== "above title") {
