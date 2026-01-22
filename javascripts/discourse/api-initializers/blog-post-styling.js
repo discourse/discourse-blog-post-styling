@@ -77,16 +77,27 @@ function extractAndInjectSummary() {
   }
 }
 
-const SIZE_CLASSES = ["--blog-image-full-width", "--blog-image-centered"];
+const SIZE_CLASSES = [
+  "--blog-image-full-width",
+  "--blog-image-centered",
+  "--blog-no-images",
+];
 const POSITION_CLASSES = [
   "--blog-image-above-title",
   "--blog-image-below-title",
 ];
 
 function getSizeClass() {
-  return settings.image_size === "full width"
-    ? "--blog-image-full-width"
-    : "--blog-image-centered";
+  switch (settings.image_size) {
+    case "full width":
+      return "--blog-image-full-width";
+    case "centered":
+      return "--blog-image-centered";
+    case "no image":
+      return "--blog-no-images";
+    default:
+      return null;
+  }
 }
 
 function getPositionClass() {
@@ -118,7 +129,6 @@ function wrapFirstLetter() {
     return;
   }
 
-  // Get the first text node
   const walker = document.createTreeWalker(
     firstParagraph,
     NodeFilter.SHOW_TEXT,
