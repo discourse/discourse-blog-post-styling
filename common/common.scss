@@ -10,6 +10,10 @@
   --topic-avatar-width: 20px;
   --blog-width: 70%;
 
+  @include viewport.until(sm) {
+    --blog-width: 100%;
+  }
+
   .topic-map__contents,
   .topic-map__users-list,
   .with-timeline {
@@ -42,10 +46,17 @@
       h1 {
         font-size: 4rem;
         font-weight: 500;
+        @include viewport.until(sm) {
+          font-size: 3rem;
+        }
       }
     }
 
     article#post_1 {
+      @include viewport.until(sm) {
+        padding-top: 0;
+        border-top: 0;
+      }
       .topic-meta-data,        // hides the edit history icon too, need to find a solution
       .topic-avatar {
         display: none;
@@ -58,7 +69,9 @@
       margin-top: var(--space-4);
 
       h1 {
-        font-size: 3em;
+        @include viewport.from(sm) {
+          font-size: 3em;
+        }
         font-weight: bold;
       }
     }
@@ -102,7 +115,9 @@
       }
 
       .post__regular {
-        margin-left: -20px;
+        @include viewport.from(sm) {
+          margin-left: -20px;
+        }
         border-top: 1px solid var(--primary-low);
       }
     }
@@ -220,7 +235,12 @@
     line-height: 1;
   }
 
-  #post_1 {
+  article#post_1 {
+    .post__regular {
+      @include viewport.until(sm) {
+        padding-top: 0;
+      }
+    }
     .topic-body {
       border-top: none;
       padding-top: 0;
