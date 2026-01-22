@@ -36,4 +36,4 @@ mobile_enabled:
   type: bool
   default: false
   description:
-    en: "Enable blog post styling on mobile devices. This uses the default style: full width image, positioned below the title."
+    en: "Enable blog post styling on mobile devices."
