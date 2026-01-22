@@ -19,7 +19,6 @@ image_position:
   type: enum
   default: "below title"
   choices:
-    - none
     - above title
     - below title
   description:
@@ -28,10 +27,11 @@ image_size:
   type: enum
   default: "full width"
   choices:
+    - no image
     - full width
     - centered
   description:
-    en: "Full width - image spans the full width of the content area.<br>Centered - image maintains its aspect ratio and centers within the content area."
+    en: "No image - hides the featured image.<br>Full width - image spans the full width of the content area.<br>Centered - image maintains its aspect ratio and centers within the content area."
 mobile_enabled:
   type: bool
   default: false

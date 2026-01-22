@@ -6,6 +6,9 @@ export default class BlogImageAbovePostStream extends Component {
     if (!context.capabilities.viewport.sm && !settings.mobile_enabled) {
       return false;
     }
+    if (settings.image_size === "no image") {
+      return false;
+    }
     if (settings.image_position !== "above title") {
       return false;
     }
