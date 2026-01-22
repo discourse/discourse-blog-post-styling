@@ -16,7 +16,8 @@
 
   .topic-map__contents,
   .topic-map__users-list,
-  .with-timeline {
+  .with-timeline,
+  .container.posts .topic-navigation.with-topic-progress {
     display: none;
   }
 
