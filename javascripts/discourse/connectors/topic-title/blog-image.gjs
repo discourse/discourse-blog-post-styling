@@ -1,4 +1,5 @@
 import Component from "@glimmer/component";
+import { eq } from "truth-helpers";
 import avatar from "discourse/helpers/avatar";
 import formatDate from "discourse/helpers/format-date";
 import BlogImage from "../../components/blog-image";
@@ -30,6 +31,8 @@ export default class BlogImageBelowTitle extends Component {
           this.topic.created_at
         }}</span>
     </div>
-    <BlogImage @topic={{this.topic}} />
+    {{#unless (eq settings.image_size "no image")}}
+      <BlogImage @topic={{this.topic}} />
+    {{/unless}}
   </template>
 }
