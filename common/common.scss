@@ -118,7 +118,6 @@
 
   &.--blog-no-images {
     #post_1 .cooked {
-      margin-top: var(--space-8);
       & > p:first-child:has(a.onebox) {
         display: block;
       }
@@ -254,21 +253,11 @@
     }
 
     .cooked {
-      & > p:first-child:has(a.onebox) {
+      > p:first-child:has(a.onebox),
+      > .lightbox-wrapper:first-child,
+      > p:first-child:empty + .lightbox-wrapper {
         display: none;
-
-        // & + p {
-        //   margin: -1em;
-        // }
       }
-
-      // & > p img:not(.emoji) {
-      //   display: none;
-      // }
-
-      // & > p ~ p img:not(.emoji) {
-      //   display: block;
-      // }
     }
   }
 
