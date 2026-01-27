@@ -15,9 +15,7 @@
   }
 
   .topic-map__contents,
-  .topic-map__users-list,
-  .with-timeline,
-  .container.posts .topic-navigation.with-topic-progress {
+  .topic-map__users-list {
     display: none;
   }
 
@@ -186,9 +184,20 @@
   }
 
   .container.posts {
-    grid-template-areas: "posts";
-    grid-template-columns: var(--blog-width);
+    grid-template-columns: var(--blog-width) auto;
     justify-content: center;
+  }
+
+  .timeline-container {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  &.viewing-first-post {
+    .timeline-container {
+      opacity: 0;
+      pointer-events: none;
+    }
   }
 
   .topic-body {
