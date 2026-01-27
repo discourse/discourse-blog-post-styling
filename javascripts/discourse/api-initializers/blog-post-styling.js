@@ -147,10 +147,6 @@ export default apiInitializer("1.0", (api) => {
     const controller = api.container.lookup("controller:topic");
     const topic = controller?.model;
 
-    // if (document.body.classList.contains("viewing-first-post")) {
-    //   document.body.classList.remove("viewing-first-post");
-    // }
-
     if (isBlogTopic(topic, settings)) {
       const capabilities = api.container.lookup("service:capabilities");
       const isMobile = !capabilities.viewport.sm;
@@ -173,7 +169,9 @@ export default apiInitializer("1.0", (api) => {
       }
 
       extractAndInjectSummary();
-      wrapFirstLetter();
+      if (settings.dropcap_enabled) {
+        wrapFirstLetter();
+      }
     } else {
       document.body.classList.remove("blog-post");
       removeStyleClasses();
