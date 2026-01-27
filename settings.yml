@@ -15,14 +15,6 @@ blog_tag:
   default: ""
   description:
     en: "Topics will have blog styling applied when they have any of the tags included in this setting."
-image_position:
-  type: enum
-  default: "below title"
-  choices:
-    - above title
-    - below title
-  description:
-    en: "Choose where the featured image appears relative to the title. Only above title will include a summary."
 image_size:
   type: enum
   default: "full width"
@@ -32,6 +24,19 @@ image_size:
     - centered
   description:
     en: "No image - hides the featured image.<br>Full width - image spans the full width of the content area.<br>Centered - image maintains its aspect ratio and centers within the content area."
+image_position:
+  type: enum
+  default: "below title"
+  choices:
+    - above title
+    - below title
+  description:
+    en: "Choose where the featured image appears relative to the title. Only above title will include a summary."
+dropcap_enabled:
+  type: bool
+  default: false
+  description:
+    en: "Enable drop cap styling for the first letter of blog posts."
 mobile_enabled:
   type: bool
   default: false
