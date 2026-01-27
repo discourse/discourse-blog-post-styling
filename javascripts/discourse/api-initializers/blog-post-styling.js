@@ -112,7 +112,11 @@ function getPositionClass() {
 }
 
 function removeStyleClasses() {
-  document.body.classList.remove(...SIZE_CLASSES, ...POSITION_CLASSES);
+  document.body.classList.remove(
+    ...SIZE_CLASSES,
+    ...POSITION_CLASSES,
+    "viewing-first-post"
+  );
 }
 
 function wrapFirstLetter() {
@@ -158,16 +162,35 @@ function wrapFirstLetter() {
 }
 
 export default apiInitializer("1.0", (api) => {
+  let postState = null;
+
+  function isFirstPost(post) {
+    if (!post) {
+      return;
+    }
+
+    const firstPost = post.post_number === 1;
+
+    if (postState === firstPost) {
+      return;
+    }
+    postState = firstPost;
+    document.body.classList.toggle("viewing-first-post", firstPost);
+  }
+
   api.onPageChange(() => {
     const controller = api.container.lookup("controller:topic");
     const topic = controller?.model;
+
+    // if (document.body.classList.contains("viewing-first-post")) {
+    //   document.body.classList.remove("viewing-first-post");
+    // }
 
     if (isBlogTopic(topic)) {
       const capabilities = api.container.lookup("service:capabilities");
       const isMobile = !capabilities.viewport.sm;
       if (isMobile && !settings.mobile_enabled) {
         document.body.classList.remove("blog-post");
-        removeStyleClasses();
         document.querySelector(".blog-post__summary")?.remove();
         removeSummaryTags();
         return;
@@ -175,7 +198,6 @@ export default apiInitializer("1.0", (api) => {
 
       document.body.classList.add("blog-post");
 
-      removeStyleClasses();
       const sizeClass = getSizeClass();
       const positionClass = getPositionClass();
       if (sizeClass) {
@@ -192,5 +214,9 @@ export default apiInitializer("1.0", (api) => {
       removeStyleClasses();
       document.querySelector(".blog-post__summary")?.remove();
     }
+  });
+
+  api.onAppEvent("topic:current-post-changed", ({ post }) => {
+    isFirstPost(post);
   });
 });
