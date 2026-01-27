@@ -1,5 +1,6 @@
 import Component from "@glimmer/component";
 import BlogImage from "../../components/blog-image";
+import isBlogTopic from "../../lib/is-blog-topic";
 
 export default class BlogImageAbovePostStream extends Component {
   static shouldRender(args, context) {
@@ -12,7 +13,7 @@ export default class BlogImageAbovePostStream extends Component {
     if (settings.image_position !== "above title") {
       return false;
     }
-    return settings.blog_category?.length > 0 || settings.blog_tag?.length > 0;
+    return isBlogTopic(args.model, settings);
   }
 
   get topic() {

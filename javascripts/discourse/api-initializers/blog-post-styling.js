@@ -1,40 +1,5 @@
 import { apiInitializer } from "discourse/lib/api";
-import Category from "discourse/models/category";
-
-function isBlogTopic(topic) {
-  if (!topic) {
-    return false;
-  }
-
-  let hasCategory = false;
-  let hasTag = false;
-
-  if (topic.category_id) {
-    const allowedCategories = settings.blog_category
-      .split(",")
-      .map((c) => c.trim())
-      .filter(Boolean);
-    const currentCategory = Category.findById(topic.category_id);
-    if (currentCategory) {
-      const parentCategorySlug = currentCategory.parentCategory
-        ? `${currentCategory.parentCategory.slug}-`
-        : "";
-      hasCategory = allowedCategories.some(
-        (c) => c === `${parentCategorySlug}${currentCategory.slug}`
-      );
-    }
-  }
-
-  if (topic.tags) {
-    const allowedTags = settings.blog_tag
-      .split("|")
-      .map((t) => t.trim())
-      .filter(Boolean);
-    hasTag = allowedTags.some((tag) => topic.tags.includes(tag));
-  }
-
-  return hasCategory || hasTag;
-}
+import isBlogTopic from "../lib/is-blog-topic";
 
 function removeSummaryTags() {
   const cookedContent = document.querySelector("#post_1 .cooked");
@@ -186,7 +151,7 @@ export default apiInitializer("1.0", (api) => {
     //   document.body.classList.remove("viewing-first-post");
     // }
 
-    if (isBlogTopic(topic)) {
+    if (isBlogTopic(topic, settings)) {
       const capabilities = api.container.lookup("service:capabilities");
       const isMobile = !capabilities.viewport.sm;
       if (isMobile && !settings.mobile_enabled) {

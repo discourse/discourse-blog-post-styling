@@ -3,6 +3,7 @@ import { eq } from "truth-helpers";
 import avatar from "discourse/helpers/avatar";
 import formatDate from "discourse/helpers/format-date";
 import BlogImage from "../../components/blog-image";
+import isBlogTopic from "../../lib/is-blog-topic";
 
 export default class BlogImageBelowTitle extends Component {
   static shouldRender(args, context) {
@@ -12,7 +13,11 @@ export default class BlogImageBelowTitle extends Component {
     if (settings.image_position !== "below title") {
       return false;
     }
-    return settings.blog_category?.length > 0 || settings.blog_tag?.length > 0;
+    if (settings.image_size === "no image") {
+      return false;
+    }
+
+    return isBlogTopic(args.model, settings);
   }
 
   get topic() {
@@ -31,8 +36,6 @@ export default class BlogImageBelowTitle extends Component {
           this.topic.created_at
         }}</span>
     </div>
-    {{#unless (eq settings.image_size "no image")}}
-      <BlogImage @topic={{this.topic}} />
-    {{/unless}}
+    <BlogImage @topic={{this.topic}} />
   </template>
 }
