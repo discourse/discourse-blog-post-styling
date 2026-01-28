@@ -23,8 +23,8 @@
     h1 {
       font-size: 2.5rem;
 
-      @include viewport.from(sm) {
-        font-size: 3rem;
+      @include viewport.until(sm) {
+        font-size: var(--font-up-5);
       }
     }
     display: flex;
@@ -45,8 +45,11 @@
 
       .title-wrapper {
         margin-inline: auto;
-        text-align: center;
-        justify-content: center;
+
+        @include viewport.from(sm) {
+          justify-content: center;
+          text-align: center;
+        }
       }
     }
 
@@ -145,6 +148,10 @@
 
   &__avatar {
     grid-area: avatar;
+    .avatar {
+      height: 40px;
+      width: 40px;
+    }
   }
 
   &__author {
@@ -158,11 +165,17 @@
     grid-area: date;
     color: var(--primary-medium);
     align-self: flex-start;
+
+    .--blog-image-below-title & {
+      text-transform: uppercase;
+      font-size: var(--font-down-1);
+    }
   }
 
   &__summary {
     font-size: var(--font-up-1-rem);
     margin-block: var(--space-6);
+    color: var(--primary-800);
   }
 
   &__image {
@@ -184,7 +197,7 @@
   }
 
   .container.posts {
-    grid-template-columns: var(--blog-width) auto;
+    grid-template-columns: var(--blog-width) 0;
     justify-content: center;
   }
 
@@ -305,7 +318,11 @@
         border-left: 7px solid var(--tertiary-high);
         background: var(--tertiary-very-low);
         padding: var(--space-6) var(--space-4);
-        font-weight: 500;
+        margin-inline: auto;
+
+        @include viewport.from(sm) {
+          width: 80%;
+        }
 
         &:before {
           color: var(--tertiary);
@@ -317,6 +334,8 @@
 
         p {
           display: inline;
+          font-size: var(--font-up-2-rem);
+          font-style: italic;
         }
       }
 
