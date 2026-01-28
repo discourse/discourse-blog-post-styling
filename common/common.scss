@@ -197,7 +197,7 @@
   }
 
   .container.posts {
-    grid-template-columns: var(--blog-width) 0;
+    grid-template-columns: var(--blog-width) auto;
     justify-content: center;
   }
 
