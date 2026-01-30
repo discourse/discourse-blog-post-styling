@@ -1,36 +1,41 @@
 import { apiInitializer } from "discourse/lib/api";
 import isBlogTopic from "../lib/is-blog-topic";
 
-function removeSummaryTags() {
-  const cookedContent = document.querySelector("#post_1 .cooked");
-  if (!cookedContent) {
+const SIZE_CLASSES = [
+  "--blog-image-full-width",
+  "--blog-image-centered",
+  "--blog-no-images",
+];
+const POSITION_CLASSES = [
+  "--blog-image-above-title",
+  "--blog-image-below-title",
+];
+
+function removeSummaryTags(firstPost) {
+  if (!firstPost) {
     return;
   }
-  cookedContent.innerHTML = cookedContent.innerHTML.replace(
+  firstPost.innerHTML = firstPost.innerHTML.replace(
     /\[summary\][\s\S]*?\[\/summary\]/i,
     ""
   );
 }
 
-function extractAndInjectSummary() {
+function extractAndInjectSummary(firstPost) {
   document.querySelector(".blog-post__summary")?.remove();
 
-  const cookedContent = document.querySelector("#post_1 .cooked");
-  if (!cookedContent) {
+  if (!firstPost) {
     return;
   }
 
-  const summaryMatch = cookedContent.innerHTML.match(
+  const summaryMatch = firstPost.innerHTML.match(
     /\[summary\]([\s\S]*?)\[\/summary\]/i
   );
 
   if (summaryMatch) {
     const summaryText = summaryMatch[1].trim();
 
-    cookedContent.innerHTML = cookedContent.innerHTML.replace(
-      /\[summary\][\s\S]*?\[\/summary\]/i,
-      ""
-    );
+    removeSummaryTags(firstPost);
 
     const titleWrapper = document.querySelector("#topic-title .title-wrapper");
     if (titleWrapper) {
@@ -41,16 +46,6 @@ function extractAndInjectSummary() {
     }
   }
 }
-
-const SIZE_CLASSES = [
-  "--blog-image-full-width",
-  "--blog-image-centered",
-  "--blog-no-images",
-];
-const POSITION_CLASSES = [
-  "--blog-image-above-title",
-  "--blog-image-below-title",
-];
 
 function getSizeClass() {
   switch (settings.image_size) {
@@ -84,49 +79,17 @@ function removeStyleClasses() {
   );
 }
 
-function wrapFirstLetter() {
-  const cookedContent = document.querySelector("#post_1 .cooked");
-  if (!cookedContent || cookedContent.querySelector(".blog-post__drop-cap")) {
+function wrapFirstLetter(firstPost) {
+  if (!firstPost || firstPost.querySelector(".blog-post__drop-cap")) {
     return;
   }
-
-  const firstParagraph = Array.from(cookedContent.querySelectorAll("p")).find(
-    (p) => p.textContent.trim().length > 0
+  firstPost.innerHTML = firstPost.innerHTML.replace(
+    /<p([^>]*)>((?:<(?!\/)[^>]+>)*)([\p{L}\p{N}])/iu,
+    "<p$1>$2<span class='blog-post__drop-cap'>$3</span>"
   );
-
-  if (!firstParagraph) {
-    return;
-  }
-
-  const walker = document.createTreeWalker(
-    firstParagraph,
-    NodeFilter.SHOW_TEXT,
-    {
-      acceptNode: (node) =>
-        node.textContent.trim().length > 0
-          ? NodeFilter.FILTER_ACCEPT
-          : NodeFilter.FILTER_SKIP,
-    }
-  );
-
-  const firstTextNode = walker.nextNode();
-  if (!firstTextNode) {
-    return;
-  }
-
-  const text = firstTextNode.textContent;
-  const firstLetter = text.charAt(0);
-  const restOfText = text.slice(1);
-
-  const span = document.createElement("span");
-  span.className = "blog-post__drop-cap";
-  span.textContent = firstLetter;
-
-  firstTextNode.textContent = restOfText;
-  firstTextNode.parentNode.insertBefore(span, firstTextNode);
 }
 
-export default apiInitializer("1.0", (api) => {
+export default apiInitializer((api) => {
   let postState = null;
 
   function isFirstPost(post) {
@@ -143,17 +106,57 @@ export default apiInitializer("1.0", (api) => {
     document.body.classList.toggle("viewing-first-post", firstPost);
   }
 
-  api.onPageChange(() => {
+  api.onAppEvent("topic:current-post-changed", ({ post }) => {
+    isFirstPost(post);
+  });
+
+  api.onAppEvent("composer:edited-post", () => {
     const controller = api.container.lookup("controller:topic");
     const topic = controller?.model;
 
     if (isBlogTopic(topic, settings)) {
+      const thumbnail = document.querySelector(
+        ".blog-post article#post_1 .cooked > p img"
+      );
+      // Refresh route to reload topic data including thumbnail when thumbnail is changed
+      if (
+        topic?.thumbnails?.[0]?.url?.split("/")?.pop() !==
+        thumbnail?.src?.split("/")?.pop()
+      ) {
+        const router = api.container.lookup("service:router");
+        router.refresh();
+      }
+    }
+  });
+
+  api.onPageChange(() => {
+    const controller = api.container.lookup("controller:topic");
+    const topic = controller?.model;
+
+    if (!isBlogTopic(topic, settings)) {
+      document.body.classList.remove("blog-post");
+      removeStyleClasses();
+      document.querySelector(".blog-post__summary")?.remove();
+    }
+  });
+
+  api.decorateCookedElement(
+    (elem, helper) => {
+      const post = helper.model;
+      if (!post || !post.firstPost) {
+        return;
+      }
+      const topic = post.topic;
+
+      if (!isBlogTopic(topic, settings)) {
+        return;
+      }
       const capabilities = api.container.lookup("service:capabilities");
       const isMobile = !capabilities.viewport.sm;
       if (isMobile && !settings.mobile_enabled) {
         document.body.classList.remove("blog-post");
         document.querySelector(".blog-post__summary")?.remove();
-        removeSummaryTags();
+        removeSummaryTags(elem);
         return;
       }
 
@@ -168,18 +171,11 @@ export default apiInitializer("1.0", (api) => {
         document.body.classList.add(positionClass);
       }
 
-      extractAndInjectSummary();
+      extractAndInjectSummary(elem);
       if (settings.dropcap_enabled) {
-        wrapFirstLetter();
+        wrapFirstLetter(elem);
       }
-    } else {
-      document.body.classList.remove("blog-post");
-      removeStyleClasses();
-      document.querySelector(".blog-post__summary")?.remove();
-    }
-  });
-
-  api.onAppEvent("topic:current-post-changed", ({ post }) => {
-    isFirstPost(post);
-  });
+    },
+    { onlyStream: true }
+  );
 });
