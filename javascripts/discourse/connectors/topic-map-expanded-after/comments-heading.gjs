@@ -2,8 +2,10 @@ import Component from "@glimmer/component";
 import { i18n } from "discourse-i18n";
 
 export default class CommentsHeading extends Component {
-  static shouldRender() {
-    // Only render if blog categories or tags are configured
+  static shouldRender(args, context) {
+    if (!context.capabilities.viewport.sm && !settings.mobile_enabled) {
+      return false;
+    }
     return settings.blog_category?.length > 0 || settings.blog_tag?.length > 0;
   }
 
