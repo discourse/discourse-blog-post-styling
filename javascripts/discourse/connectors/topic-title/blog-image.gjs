@@ -24,7 +24,23 @@ export default class BlogImageBelowTitle extends Component {
     return this.args.outletArgs.model;
   }
 
+  get summary() {
+    const summaryMatch = this.topic
+      .firstPost()
+      ._result.cooked.match(/\[summary\]([\s\S]*?)\[\/summary\]/i);
+
+    if (summaryMatch) {
+      const summaryText = summaryMatch[1].trim();
+      return summaryText;
+    }
+  }
+
   <template>
+    {{#if this.summary}}
+      <p class="blog-post__summary">
+        {{this.summary}}
+      </p>
+    {{/if}}
     <div class="blog-post__meta">
       <div class="blog-post__avatar">
         {{avatar this.topic.details.created_by imageSize="medium"}}
