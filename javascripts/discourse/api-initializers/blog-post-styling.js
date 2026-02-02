@@ -1,15 +1,16 @@
 import { apiInitializer } from "discourse/lib/api";
 import isBlogTopic from "../lib/is-blog-topic";
 
-const SIZE_CLASSES = [
-  "--blog-image-full-width",
-  "--blog-image-centered",
-  "--blog-no-images",
-];
-const POSITION_CLASSES = [
-  "--blog-image-above-title",
-  "--blog-image-below-title",
-];
+const SIZE_CLASSES = {
+  imageFull: "--blog-image-full-width",
+  imageCentered: "--blog-image-centered",
+  noImage: "--blog-no-images",
+};
+
+const POSITION_CLASSES = {
+  aboveTitle: "--blog-image-above-title",
+  belowTitle: "--blog-image-below-title",
+};
 
 function removeSummaryTags(firstPost) {
   if (!firstPost) {
@@ -50,11 +51,11 @@ function extractAndInjectSummary(firstPost) {
 function getSizeClass() {
   switch (settings.image_size) {
     case "full width":
-      return "--blog-image-full-width";
+      return SIZE_CLASSES.imageFull;
     case "centered":
-      return "--blog-image-centered";
+      return SIZE_CLASSES.imageCentered;
     case "no image":
-      return "--blog-no-images";
+      return SIZE_CLASSES.noImage;
     default:
       return null;
   }
@@ -63,9 +64,9 @@ function getSizeClass() {
 function getPositionClass() {
   switch (settings.image_position) {
     case "above title":
-      return "--blog-image-above-title";
+      return POSITION_CLASSES.aboveTitle;
     case "below title":
-      return "--blog-image-below-title";
+      return POSITION_CLASSES.belowTitle;
     default:
       return null;
   }
@@ -73,8 +74,8 @@ function getPositionClass() {
 
 function removeStyleClasses() {
   document.body.classList.remove(
-    ...SIZE_CLASSES,
-    ...POSITION_CLASSES,
+    ...Object.values(SIZE_CLASSES),
+    ...Object.values(POSITION_CLASSES),
     "viewing-first-post"
   );
 }
