@@ -12,6 +12,7 @@ RSpec.describe "Blog image styling with tags", system: true do
 
   before do
     theme.update_setting(:blog_tag, "blog")
+    theme.update_setting(:image_position, "below title")
     theme.save!
     sign_in(user)
   end
