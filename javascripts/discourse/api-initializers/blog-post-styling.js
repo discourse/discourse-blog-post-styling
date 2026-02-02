@@ -123,8 +123,7 @@ export default apiInitializer((api) => {
         topic?.thumbnails?.[0]?.url?.split("/")?.pop() !==
         thumbnail?.src?.split("/")?.pop()
       ) {
-        const router = api.container.lookup("service:router");
-        router.refresh();
+        window.location.reload();
       }
     }
   });

@@ -1,4 +1,6 @@
 import Component from "@glimmer/component";
+import { htmlSafe } from "@ember/template";
+import { concat } from "@ember/helper";
 
 export default class BlogImage extends Component {
   get topic() {
@@ -14,8 +16,9 @@ export default class BlogImage extends Component {
       <div class="blog-image-container">
         <div
           class="blog-post__image"
-          style="background-image: url('{{this.imageURL}}')"
-        ></div>
+          style={{htmlSafe (concat "background-image: url(" this.imageURL ")")}}
+        >
+          ></div>
       </div>
     {{/if}}
   </template>
