@@ -1,5 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
+import { SUMMARY_REGEX } from "../components/blog-summary";
 import isBlogTopic from "../lib/is-blog-topic";
+import isMobileDisabled from "../lib/is-mobile-disabled";
 
 const SIZE_CLASSES = {
   imageFull: "--blog-image-full-width",
@@ -16,10 +18,7 @@ function removeSummaryTags(firstPost) {
   if (!firstPost) {
     return;
   }
-  firstPost.innerHTML = firstPost.innerHTML.replace(
-    /\[summary\][\s\S]*?\[\/summary\]/i,
-    ""
-  );
+  firstPost.innerHTML = firstPost.innerHTML.replace(SUMMARY_REGEX, "");
 }
 
 function getSizeClass() {
@@ -124,11 +123,12 @@ export default apiInitializer((api) => {
       if (!isBlogTopic(topic, settings)) {
         return;
       }
+
+      removeSummaryTags(elem);
+
       const capabilities = api.container.lookup("service:capabilities");
-      const isMobile = !capabilities.viewport.sm;
-      if (isMobile && !settings.mobile_enabled) {
+      if (isMobileDisabled(capabilities, settings)) {
         document.body.classList.remove("blog-post");
-        removeSummaryTags(elem);
         return;
       }
 
@@ -143,7 +143,6 @@ export default apiInitializer((api) => {
         document.body.classList.add(positionClass);
       }
 
-      removeSummaryTags(elem);
       if (settings.dropcap_enabled) {
         wrapFirstLetter(elem);
       }

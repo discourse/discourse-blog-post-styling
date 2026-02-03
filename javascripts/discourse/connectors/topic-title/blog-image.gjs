@@ -1,13 +1,14 @@
 import Component from "@glimmer/component";
-import { eq } from "truth-helpers";
 import avatar from "discourse/helpers/avatar";
 import formatDate from "discourse/helpers/format-date";
 import BlogImage from "../../components/blog-image";
+import BlogSummary from "../../components/blog-summary";
 import isBlogTopic from "../../lib/is-blog-topic";
+import isMobileDisabled from "../../lib/is-mobile-disabled";
 
 export default class BlogImageBelowTitle extends Component {
   static shouldRender(args, context) {
-    if (!context.capabilities.viewport.sm && !settings.mobile_enabled) {
+    if (isMobileDisabled(context.capabilities, settings)) {
       return false;
     }
     if (settings.image_position !== "below title") {
@@ -24,23 +25,8 @@ export default class BlogImageBelowTitle extends Component {
     return this.args.outletArgs.model;
   }
 
-  get summary() {
-    const summaryMatch = this.topic
-      .firstPost()
-      ._result.cooked.match(/\[summary\]([\s\S]*?)\[\/summary\]/i);
-
-    if (summaryMatch) {
-      const summaryText = summaryMatch[1].trim();
-      return summaryText;
-    }
-  }
-
   <template>
-    {{#if this.summary}}
-      <p class="blog-post__summary">
-        {{this.summary}}
-      </p>
-    {{/if}}
+    <BlogSummary @topic={{this.topic}} />
     <div class="blog-post__meta">
       <div class="blog-post__avatar">
         {{avatar this.topic.details.created_by imageSize="medium"}}

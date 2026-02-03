@@ -1,10 +1,11 @@
 import Component from "@glimmer/component";
 import BlogImage from "../../components/blog-image";
 import isBlogTopic from "../../lib/is-blog-topic";
+import isMobileDisabled from "../../lib/is-mobile-disabled";
 
 export default class BlogImageAbovePostStream extends Component {
   static shouldRender(args, context) {
-    if (!context.capabilities.viewport.sm && !settings.mobile_enabled) {
+    if (isMobileDisabled(context.capabilities, settings)) {
       return false;
     }
     if (settings.image_size === "no image") {

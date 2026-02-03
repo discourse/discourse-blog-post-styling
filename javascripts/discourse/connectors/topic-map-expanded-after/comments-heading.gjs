@@ -1,9 +1,10 @@
 import Component from "@glimmer/component";
 import { i18n } from "discourse-i18n";
+import isMobileDisabled from "../../lib/is-mobile-disabled";
 
 export default class CommentsHeading extends Component {
   static shouldRender(args, context) {
-    if (!context.capabilities.viewport.sm && !settings.mobile_enabled) {
+    if (isMobileDisabled(context.capabilities, settings)) {
       return false;
     }
     return settings.blog_category?.length > 0 || settings.blog_tag?.length > 0;
