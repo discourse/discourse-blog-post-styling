@@ -29,7 +29,9 @@ export default function isBlogTopic(topic, settings) {
       .split("|")
       .map((t) => t.trim())
       .filter(Boolean);
-    hasTag = topic.tags.some((tag) => allowedTags.includes(tag.name));
+    hasTag = topic.tags.some((tag) =>
+      allowedTags.includes(typeof tag === "string" ? tag : tag.name)
+    );
   }
 
   return hasCategory || hasTag;
