@@ -6,7 +6,7 @@ import BlogSummary from "../../components/blog-summary";
 import isBlogTopic from "../../lib/is-blog-topic";
 import isMobileDisabled from "../../lib/is-mobile-disabled";
 
-export default class BlogImageBelowTitle extends Component {
+export default class BlogPostHeader extends Component {
   static shouldRender(args, context) {
     if (isMobileDisabled(context.capabilities, settings)) {
       return false;
