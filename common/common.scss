@@ -254,9 +254,14 @@
   }
 
   &__drop-cap {
-    font-size: var(--font-up-6);
-    margin-right: 0.1em;
-    line-height: 1;
+    article#post_1 {
+      .cooked + p::first-letter,
+      p:empty + p::first-letter {
+        font-size: var(--font-up-6);
+        margin-right: 0.1em;
+        line-height: 1;
+      }
+    }
   }
 
   article#post_1 {

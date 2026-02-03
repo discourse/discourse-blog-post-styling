@@ -49,17 +49,8 @@ function removeStyleClasses() {
   document.body.classList.remove(
     ...Object.values(SIZE_CLASSES),
     ...Object.values(POSITION_CLASSES),
-    "viewing-first-post"
-  );
-}
-
-function wrapFirstLetter(firstPost) {
-  if (!firstPost || firstPost.querySelector(".blog-post__drop-cap")) {
-    return;
-  }
-  firstPost.innerHTML = firstPost.innerHTML.replace(
-    /<p([^>]*)>((?:<(?!\/)[^>]+>)*)([\p{L}\p{N}])/iu,
-    "<p$1>$2<span class='blog-post__drop-cap'>$3</span>"
+    "viewing-first-post",
+    "blog-post__drop-cap"
   );
 }
 
@@ -144,7 +135,7 @@ export default apiInitializer((api) => {
       }
 
       if (settings.dropcap_enabled) {
-        wrapFirstLetter(elem);
+        document.body.classList.add("blog-post__drop-cap");
       }
     },
     { onlyStream: true }
