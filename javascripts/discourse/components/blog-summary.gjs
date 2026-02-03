@@ -4,7 +4,10 @@ export const SUMMARY_REGEX = /\[summary\]([\s\S]*?)\[\/summary\]/i;
 
 export default class BlogSummary extends Component {
   get summary() {
-    const cooked = this.args.topic?.firstPost?.()?._result?.cooked;
+    const firstPost = this.args.topic?.postStream?.posts?.find(
+      (p) => p.post_number === 1
+    );
+    const cooked = firstPost?.cooked;
     if (!cooked) {
       return;
     }
