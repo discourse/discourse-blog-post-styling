@@ -57,6 +57,7 @@
         padding-top: 0;
         border-top: 0;
       }
+
       .topic-meta-data,
       .topic-avatar {
         display: none;
@@ -102,6 +103,7 @@
           }
         }
       }
+
       .topic-avatar {
         position: static !important;
         border-top: none;
@@ -148,6 +150,7 @@
 
   &__avatar {
     grid-area: avatar;
+
     .avatar {
       height: 40px;
       width: 40px;
@@ -262,6 +265,7 @@
         padding-top: 0;
       }
     }
+
     .topic-body {
       border-top: none;
       padding-top: 0;
@@ -323,7 +327,7 @@
           width: 80%;
         }
 
-        &:before {
+        &::before {
           color: var(--tertiary);
           content: open-quote;
           font-size: 4em;
