@@ -18,7 +18,7 @@ export default class BlogImage extends Component {
           class="blog-post__image"
           style={{htmlSafe (concat "background-image: url(" this.imageURL ")")}}
         >
-          ></div>
+        </div>
       </div>
     {{/if}}
   </template>
