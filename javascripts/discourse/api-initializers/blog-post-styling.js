@@ -49,32 +49,11 @@ function removeStyleClasses() {
   document.body.classList.remove(
     ...Object.values(SIZE_CLASSES),
     ...Object.values(POSITION_CLASSES),
-    "viewing-first-post",
     "blog-post__drop-cap"
   );
 }
 
 export default apiInitializer((api) => {
-  let postState = null;
-
-  function isFirstPost(post) {
-    if (!post) {
-      return;
-    }
-
-    const firstPost = post.post_number === 1;
-
-    if (postState === firstPost) {
-      return;
-    }
-    postState = firstPost;
-    document.body.classList.toggle("viewing-first-post", firstPost);
-  }
-
-  api.onAppEvent("topic:current-post-changed", ({ post }) => {
-    isFirstPost(post);
-  });
-
   api.onAppEvent("composer:edited-post", () => {
     const controller = api.container.lookup("controller:topic");
     const topic = controller?.model;
