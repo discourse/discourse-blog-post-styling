@@ -46,10 +46,10 @@
 
       .title-wrapper {
         margin-inline: auto;
+        text-align: center;
 
         @include viewport.from(sm) {
           justify-content: center;
-          text-align: center;
         }
       }
     }
