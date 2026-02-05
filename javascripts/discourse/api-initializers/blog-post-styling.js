@@ -13,10 +13,17 @@ function wrapFirstLetter(firstPost) {
   if (!firstPost || firstPost.querySelector(".blog-post__drop-cap")) {
     return;
   }
-  firstPost.innerHTML = firstPost.innerHTML.replace(
-    /<p([^>]*)>((?:<(?!\/)[^>]+>)*)([\p{L}\p{N}])/iu,
-    "<p$1>$2<span class='blog-post__drop-cap'>$3</span>"
-  );
+  const paragraphs = firstPost.querySelectorAll("p");
+  for (const p of paragraphs) {
+    const text = p.textContent.trim();
+    if (text) {
+      p.innerHTML = p.innerHTML.replace(
+        /(^|>)([\p{L}\p{N}])/u,
+        "$1<span class='blog-post__drop-cap'>$2</span>"
+      );
+      return;
+    }
+  }
 }
 
 export default apiInitializer((api) => {
