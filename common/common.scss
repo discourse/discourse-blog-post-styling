@@ -76,9 +76,12 @@
   &.--blog-image-above-title {
     #topic-title {
       justify-content: left;
-      width: var(--blog-width);
       margin-top: var(--space-4);
       margin-inline: auto;
+
+      .title-wrapper {
+        width: auto;
+      }
 
       @include viewport.until(sm) {
         margin-bottom: 0;
