@@ -1,37 +1,44 @@
 blog_category:
   type: string
   default: ""
-  description: 
-    en: 'Enter the category slug of your blog category as it appears in the url. 
-         The slug is bold in the following example url: 
-         https://community.example.org/c/<b>blog-posts</b>/3
-         <br><br>
-         Note: you may use more than one category slug by comma separating the
-         slug values like: <b>blog-one,blog-two</b> <br>
-         Be sure there are no spaces after the commas.'
+  description:
+    en: "Enter the category slug of your blog category as it appears in the url.
+      The slug is bold in the following example url:
+      https://community.example.org/c/<b>blog-posts</b>/3
+      <br><br>
+      Note: you may use more than one category slug by comma separating the
+      slug values like: <b>blog-one,blog-two</b> <br>
+      Be sure there are no spaces after the commas."
 blog_tag:
   type: list
   list_type: tag
   default: ""
   description:
-    en: 'Topics will have blog styling applied when they have any of the tags included in this setting.'
-image_display_style:
+    en: "Topics will have blog styling applied when they have any of the tags included in this setting."
+image_size:
   type: enum
-  default: "responsive crop"
+  default: "full width"
   choices:
-    - responsive crop
-    - center fit
+    - no image
+    - full width
+    - centered
   description:
-    en: 'Responsive Crop - always display at 100% width, evenly cropping the image as needed.
-         <br>
-         Center Fit - display the full image, maintaining the aspect ratio and centering it within the page.'
+    en: "No image - hides the featured image.<br>Full width - image spans the full width of the content area.<br>Centered - image maintains its aspect ratio and centers within the content area."
+image_position:
+  type: enum
+  default: "above title"
+  choices:
+    - above title
+    - below title
+  description:
+    en: "Choose where the featured image appears relative to the title. Only above title will include a summary."
+dropcap_enabled:
+  type: bool
+  default: false
+  description:
+    en: "Enable drop cap styling for the first letter of blog posts."
 mobile_enabled:
   type: bool
   default: false
   description:
-    en: 'BETA VERSION - please provide feedback in the theme component topic.'
-no_images:
-  type: bool
-  default: false
-  description:
-      en: 'Enable if you want to include the styling without images at the top.'
+    en: "Enable blog post styling on mobile devices."
