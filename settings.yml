@@ -31,7 +31,7 @@ image_position:
     - above title
     - below title
   description:
-    en: "Choose where the featured image appears relative to the title. Only above title will include a summary."
+    en: "Choose where the featured image appears relative to the title. Only below-title will include a summary."
 dropcap_enabled:
   type: bool
   default: false
