@@ -36,10 +36,6 @@
 
     .title-wrapper {
       width: var(--blog-width);
-
-      .topic-category {
-        margin-top: var(--space-1);
-      }
     }
   }
 
@@ -183,15 +179,13 @@
     align-self: flex-start;
 
     .--blog-image-below-title & {
-      text-transform: uppercase;
       font-size: var(--font-down-1);
     }
   }
 
   &__summary {
     font-size: var(--font-up-1-rem);
-    margin-block: 0;
-    margin-block: var(--space-6);
+    margin-block: var(--space-4) var(--space-6);
     color: var(--primary-800);
 
     @include viewport.from(sm) {
@@ -228,15 +222,7 @@
   }
 
   .timeline-container {
-    opacity: 1;
-    transition: opacity 0.2s ease-in-out;
-  }
-
-  &.viewing-first-post {
-    .timeline-container {
-      opacity: 0;
-      pointer-events: none;
-    }
+    display: none;
   }
 
   .d-toc-main .timeline-toggle {
