@@ -17,6 +17,10 @@ function wrapFirstLetter(firstPost) {
   const firstParagraph = Array.from(firstPost.querySelectorAll("p")).find(
     (p) => p.textContent.trim().length > 0
   );
+
+  if (!firstParagraph) {
+    return;
+  }
   firstParagraph.innerHTML = firstParagraph.innerHTML.replace(
     /(^|>)([\p{L}\p{N}])/u,
     "$1<span class='blog-post__drop-cap'>$2</span>"
