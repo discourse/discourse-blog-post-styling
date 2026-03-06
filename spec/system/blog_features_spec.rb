@@ -4,7 +4,7 @@ RSpec.describe "Blog post features", system: true do
   fab!(:tag) { Fabricate(:tag, name: "blog") }
   fab!(:image_upload) { Fabricate(:image_upload, width: 1000, height: 1000) }
   fab!(:topic) { Fabricate(:topic, tags: [tag], image_upload_id: image_upload.id) }
-  fab!(:user)
+  fab!(:admin)
 
   let(:topic_page) { PageObjects::Pages::Topic.new }
   let!(:theme) { upload_theme_component }
@@ -13,7 +13,7 @@ RSpec.describe "Blog post features", system: true do
     theme.update_setting(:blog_tag, "blog")
     theme.update_setting(:image_position, "below title")
     theme.save!
-    sign_in(user)
+    sign_in(admin)
   end
 
   describe "drop cap (wrap first letter)" do
@@ -25,6 +25,15 @@ RSpec.describe "Blog post features", system: true do
 
       topic_page.visit_topic(topic)
       expect(page).to have_css(".blog-post__drop-cap")
+    end
+
+    it "does not error when there is no paragraph" do
+      theme.update_setting(:dropcap_enabled, true)
+      theme.save!
+      post.update!(raw: "[summary]just summary block[/summary]")
+
+      topic_page.visit_topic(topic)
+      expect(page).not_to have_css(".broken-theme-alert-banner")
     end
 
     it "does not wrap first letter when dropcap is disabled" do
