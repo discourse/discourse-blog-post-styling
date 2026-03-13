@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
-import { htmlSafe } from "@ember/template";
 import { concat } from "@ember/helper";
+import { htmlSafe } from "@ember/template";
 
 export default class BlogImage extends Component {
   get topic() {
