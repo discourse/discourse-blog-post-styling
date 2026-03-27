@@ -1,3 +1,30 @@
 en:
+  theme_metadata:
+    settings:
+      blog_category:
+        description: "Enter the category slug of your blog category as it appears in the url.
+          The slug is bold in the following example url:
+          https://community.example.org/c/<b>blog-posts</b>/3
+          <br><br>
+          Note: you may use more than one category slug by comma separating the
+          slug values like: <b>blog-one,blog-two</b> <br>
+          Be sure there are no spaces after the commas."
+      blog_tag:
+        description: "Topics will have blog styling applied when they have any of the tags included in this setting."
+      image_size:
+        description: "No image - hides the featured image.<br>Full width - image spans the full width of the content area.<br>Centered - image maintains its aspect ratio and centers within the content area."
+        choices:
+          "no image": "No image"
+          "full width": "Full width"
+          "centered": "Centered"
+      image_position:
+        description: "Choose where the featured image appears relative to the title. Only below-title will include a summary."
+        choices:
+          "above title": "Above title"
+          "below title": "Below title"
+      dropcap_enabled:
+        description: "Enable drop cap styling for the first letter of blog posts."
+      mobile_enabled:
+        description: "Enable blog post styling on mobile devices."
   blog_post_styling:
     comments_heading: Comments
