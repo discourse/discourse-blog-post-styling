@@ -6,7 +6,9 @@ module(
   function () {
     test("migrates single slug to id", function (assert) {
       const settings = new Map(Object.entries({ blog_category: "blog" }));
-      const helpers = { getCategoryIdBySlug: (slug) => (slug === "blog" ? 5 : null) };
+      const helpers = {
+        getCategoryIdBySlug: (slug) => (slug === "blog" ? 5 : null),
+      };
 
       const result = migrate(settings, helpers);
 
