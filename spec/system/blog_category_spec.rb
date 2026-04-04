@@ -33,8 +33,7 @@ RSpec.describe "Blog styling with categories", system: true do
 
   it "supports multiple categories" do
     second_category = Fabricate(:category)
-    second_topic =
-      Fabricate(:topic, category: second_category, image_upload_id: image_upload.id)
+    second_topic = Fabricate(:topic, category: second_category, image_upload_id: image_upload.id)
     Fabricate(:post, topic: second_topic)
 
     theme.update_setting(:blog_category, "#{category.id}|#{second_category.id}")
