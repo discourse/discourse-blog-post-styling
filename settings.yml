@@ -2,8 +2,6 @@ blog_category:
   type: list
   list_type: category
   default: ""
-  description:
-    en: "Topics will have blog styling applied when they are in any of the categories included in this setting."
 blog_tag:
   type: list
   list_type: tag
