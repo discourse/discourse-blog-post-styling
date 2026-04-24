@@ -1,0 +1,30 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+de:
+  theme_metadata:
+    settings:
+      blog_category:
+        description: "Themen werden automatisch als Blogbeiträge formatiert, wenn sie einer der in dieser Einstellung enthaltenen Kategorien zugeordnet sind."
+      blog_tag:
+        description: "Themen werden automatisch als Blogbeiträge formatiert, wenn sie mit einem der in dieser Einstellung enthaltenen Schlagwörter versehen wurden."
+      image_size:
+        description: "Kein Bild - blendet das hervorgehobene Bild aus.<br>Volle Breite - das Bild erstreckt sich über die gesamte Breite des Inhaltsbereichs.<br>Zentriert - das Bild behält sein Seitenverhältnis bei und wird innerhalb des Inhaltsbereichs zentriert."
+        choices:
+          "no image": "Kein Bild"
+          "full width": "Volle Breite"
+          "centered": "Zentriert"
+      image_position:
+        description: "Wähle aus, wo das hervorgehobene Bild im Verhältnis zum Titel erscheint. Nur unterhalb des Titels wird eine Zusammenfassung angezeigt."
+        choices:
+          "above title": "Über dem Titel"
+          "below title": "Unter dem Titel"
+      dropcap_enabled:
+        description: "Aktiviere die Initiale (vergrößerte Anzeige des ersten Buchstabens) für Blogbeiträge."
+      mobile_enabled:
+        description: "Aktiviere die Formatierung für Blogbeiträge auf Mobilgeräten."
+  blog_post_styling:
+    comments_heading: Kommentare

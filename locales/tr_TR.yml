@@ -1,0 +1,30 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
+tr_TR:
+  theme_metadata:
+    settings:
+      blog_category:
+        description: "Konular, bu ayarda yer alan kategorilerden herhangi birine dahil olduklarında blog stiline sahip olacaklardır."
+      blog_tag:
+        description: "Konulara, bu ayarda yer alan etiketlerden herhangi biri eklendiğinde blog stili uygulanacaktır."
+      image_size:
+        description: "Resim yok - öne çıkan resmi gizler.<br>Tam genişlik - resim, içerik alanının tüm genişliğini kaplar.<br>Ortalanmış - resim, en-boy oranını korur ve içerik alanı içinde ortalanır."
+        choices:
+          "no image": "Resim yok"
+          "full width": "Tam genişlik"
+          "centered": "Ortalanmış"
+      image_position:
+        description: "Öne çıkan resmin başlığa göre nerede görüneceğini seçin. Yalnızca \"başlığın altında\" seçeneğinde özet yer alır."
+        choices:
+          "above title": "Yukarıdaki başlık"
+          "below title": "Başlığın altında"
+      dropcap_enabled:
+        description: "Blog gönderilerinin ilk harfi için baş harf süslemesini etkinleştir."
+      mobile_enabled:
+        description: "Mobil cihazlarda blog yazısı stilini etkinleştirin."
+  blog_post_styling:
+    comments_heading: Yorumlar
