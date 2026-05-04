@@ -5,3 +5,14 @@
 # https://translate.discourse.org/
 
 he:
+  theme_metadata:
+    settings:
+      blog_category:
+        description: "על נושאים יחול סגנון בלוג כשהם באחת מהקטגוריות שנכללו בהגדרה הזאת."
+      blog_tag:
+        description: "על נושאים יחול סגנון בלוג כשיש להם את אחת מהתגיות שנכללו בהגדרה הזאת."
+      image_size:
+        choices:
+          "no image": "אין תמונה"
+          "full width": "רוחב מלא"
+          "centered": "ממורכזת"
