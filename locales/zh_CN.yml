@@ -8,9 +8,9 @@ zh_CN:
   theme_metadata:
     settings:
       blog_category:
-        description: "当主题属于此设置中包含的任何类别时，它们将应用博客样式。"
+        description: "当话题属于此设置中包含的任何类别时，它们将应用博客样式。"
       blog_tag:
-        description: "当主题具有此设置中包含的任何标签时，它们将应用博客样式。"
+        description: "当话题具有此设置中包含的任何标签时，它们将应用博客样式。"
       image_size:
         description: "无图片 - 隐藏精选图片。<br>全宽 - 图片铺满内容区域的整个宽度。<br>居中 - 图片保持其宽高比并在内容区域内居中显示。"
         choices:
