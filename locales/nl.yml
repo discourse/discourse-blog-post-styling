@@ -5,3 +5,26 @@
 # https://translate.discourse.org/
 
 nl:
+  theme_metadata:
+    settings:
+      blog_category:
+        description: "Topics krijgen blogstyling als ze in een van de categorieën staan die in deze instelling zijn opgenomen."
+      blog_tag:
+        description: "Topics krijgen blogstyling als ze een van de tags hebben die in deze instelling zijn opgenomen."
+      image_size:
+        description: "Geen afbeelding - verbergt de uitgelichte afbeelding.<br>Volledige breedte - de afbeelding beslaat de volledige breedte van het contentgebied.<br>Gecentreerd - de afbeelding behoudt zijn beeldverhouding en wordt gecentreerd in het contentgebied."
+        choices:
+          "no image": "Geen afbeelding"
+          "full width": "Volledige breedte"
+          "centered": "Gecentreerd"
+      image_position:
+        description: "Kies waar de uitgelichte afbeelding wordt weergegeven ten opzichte van de titel. Alleen 'onder de titel' bevat een samenvatting."
+        choices:
+          "above title": "Boven de titel"
+          "below title": "Onder de titel"
+      dropcap_enabled:
+        description: "Schakel styling met decoratieve initiaal in voor de eerste letter van blogberichten."
+      mobile_enabled:
+        description: "Schakel blogberichtstyling op mobiele apparaten in."
+  blog_post_styling:
+    comments_heading: Reacties
