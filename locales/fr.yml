@@ -5,3 +5,26 @@
 # https://translate.discourse.org/
 
 fr:
+  theme_metadata:
+    settings:
+      blog_category:
+        description: "Les sujets appartenant à l'une des catégories sélectionnées dans ce paramètre seront affichés comme des articles de blog."
+      blog_tag:
+        description: "Les sujets possédant l'une des étiquettes sélectionnées dans ce paramètre seront affichés comme des articles de blog."
+      image_size:
+        description: "Aucune image : masque l'image à la une.<br>Pleine largeur : l'image occupe toute la largeur de la zone de contenu.<br>Centrée : l'image conserve ses proportions et est centrée dans la zone de contenu."
+        choices:
+          "no image": "Aucune image"
+          "full width": "Pleine largeur"
+          "centered": "Centrée"
+      image_position:
+        description: "Choisissez où afficher l'image à la une par rapport au titre. Seule l'option « Sous le titre » permet d'afficher un résumé."
+        choices:
+          "above title": "Au-dessus du titre"
+          "below title": "Sous le titre"
+      dropcap_enabled:
+        description: "Activer l'affichage d'une lettrine au début des publications du blog."
+      mobile_enabled:
+        description: "Activer la mise en forme d'article de blog sur les appareils mobiles."
+  blog_post_styling:
+    comments_heading: Commentaires
