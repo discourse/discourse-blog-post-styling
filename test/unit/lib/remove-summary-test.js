@@ -1,5 +1,5 @@
 import { module, test } from "qunit";
-import removeSummary from "../../../javascripts/discourse/lib/remove-summary";
+import removeSummary from "../../../discourse/lib/remove-summary";
 
 const SUMMARY_REGEX = /\[summary\]([\s\S]*?)\[\/summary\]/i;
 
