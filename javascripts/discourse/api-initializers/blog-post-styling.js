@@ -1,13 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
 import { SUMMARY_REGEX } from "../components/blog-summary";
 import isBlogTopic from "../lib/is-blog-topic";
-
-function removeSummaryTags(firstPost) {
-  if (!firstPost) {
-    return;
-  }
-  firstPost.innerHTML = firstPost.innerHTML.replace(SUMMARY_REGEX, "");
-}
+import removeSummary from "../lib/remove-summary";
 
 function wrapFirstLetter(firstPost) {
   if (!firstPost || firstPost.querySelector(".blog-post__drop-cap")) {
@@ -58,7 +52,7 @@ export default apiInitializer((api) => {
         return;
       }
 
-      removeSummaryTags(elem);
+      removeSummary(elem, SUMMARY_REGEX);
 
       if (settings.dropcap_enabled) {
         wrapFirstLetter(elem);
